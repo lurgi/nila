@@ -1,4 +1,18 @@
 {
   "name": "nila",
-  "packageManager": "yarn@4.12.0"
+  "private": true,
+  "packageManager": "yarn@4.12.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "server": "yarn workspace @nila/server dev",
+    "mobile": "yarn workspace @nila/mobile start",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write ."
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.0"
+  }
 }
