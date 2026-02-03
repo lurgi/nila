@@ -1,0 +1,7 @@
+node_modules
+.git
+.expo
+*.log
+dist
+.DS_Store
+apps/mobile
