@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: nila-server
+    runtime: node
+    region: singapore
+    buildCommand: yarn install && yarn workspace @nila/server build
+    startCommand: yarn workspace @nila/server start
+    envVars:
+      - key: NODE_ENV
+        value: production
