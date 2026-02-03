@@ -3,7 +3,6 @@ RUN corepack enable
 
 WORKDIR /app
 COPY package.json yarn.lock .yarnrc.yml ./
-COPY .yarn .yarn
 COPY apps/server ./apps/server
 
 RUN yarn install
