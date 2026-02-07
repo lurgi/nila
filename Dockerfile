@@ -6,6 +6,7 @@ COPY package.json yarn.lock .yarnrc.yml ./
 COPY apps/server ./apps/server
 
 RUN yarn install
+RUN yarn workspace @nila/server exec prisma generate
 RUN yarn workspace @nila/server build
 
 EXPOSE 3000
