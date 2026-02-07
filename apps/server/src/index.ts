@@ -3,6 +3,7 @@ import { env } from "./config/env.js";
 import prismaPlugin from "./plugins/prisma/index.js";
 import userPlugin from "./plugins/user/index.js";
 import authPlugin from "./plugins/auth/index.js";
+import notePlugin from "./plugins/note/index.js";
 
 const fastify = Fastify({
   logger: true,
@@ -11,6 +12,7 @@ const fastify = Fastify({
 fastify.register(prismaPlugin);
 fastify.register(userPlugin);
 fastify.register(authPlugin);
+fastify.register(notePlugin);
 
 fastify.get("/health", async () => {
   return { status: "ok" };
