@@ -13,14 +13,20 @@ enum AuthProvider {
 }
 
 model User {
-  id           String       @id @default(cuid())
-  email        String       @unique
+  id           String  @id @default(cuid())
+  email        String  @unique
   name         String?
   profileImage String?
-  provider     AuthProvider
-  providerId   String
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
+
+  isEmailAgreed Boolean @default(false)
+  isPushAgreed  Boolean @default(false)
+  pushToken     String?
+
+  provider   AuthProvider
+  providerId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([provider, providerId])
 }
