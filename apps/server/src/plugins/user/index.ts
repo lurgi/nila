@@ -3,6 +3,7 @@ import { createUserRepository } from "./user.repository.js";
 import { createUserService } from "./user.service.js";
 import { createUserController } from "./user.controller.js";
 import { GetMeSchema, UpdateMeSchema } from "@/types/schemas/user.schema.js";
+import type { UpdateUserRequest } from "@/dtos/user/request.dto.js";
 import type { UserService } from "./user.service.js";
 import type { User } from "@/generated/prisma/client.js";
 
@@ -22,8 +23,16 @@ export default fp(
     const userController = createUserController(userService);
 
     fastify.decorate("userService", userService);
-    fastify.get("/me", { schema: GetMeSchema }, userController.getMe);
-    fastify.patch("/me", { schema: UpdateMeSchema }, userController.updateMe);
+    fastify.get(
+      "/me",
+      { schema: GetMeSchema, onRequest: [fastify.authenticate] },
+      userController.getMe,
+    );
+    fastify.patch<{ Body: UpdateUserRequest }>(
+      "/me",
+      { schema: UpdateMeSchema, onRequest: [fastify.authenticate] },
+      userController.updateMe,
+    );
   },
   {
     name: "userPlugin",
