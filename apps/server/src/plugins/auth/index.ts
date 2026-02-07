@@ -1,5 +1,6 @@
 import fp from "fastify-plugin";
 import jwt from "@fastify/jwt";
+import { env } from "@/config/env.js";
 import { createAuthRepository } from "./auth.repository.js";
 import { createAuthService } from "./auth.service.js";
 import { createAuthController } from "./auth.controller.js";
@@ -23,9 +24,7 @@ declare module "fastify" {
 export default fp(
   async (fastify) => {
     fastify.register(jwt, {
-      secret:
-        process.env.JWT_SECRET ||
-        "supersecret-nila-key-change-me-in-production",
+      secret: env.JWT_SECRET,
     });
 
     fastify.decorate(

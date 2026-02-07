@@ -1,10 +1,8 @@
 import Fastify from "fastify";
-import dotenv from "dotenv";
+import { env } from "./config/env.js";
 import prismaPlugin from "./plugins/prisma/index.js";
 import userPlugin from "./plugins/user/index.js";
 import authPlugin from "./plugins/auth/index.js";
-
-dotenv.config();
 
 const fastify = Fastify({
   logger: true,
@@ -20,7 +18,7 @@ fastify.get("/health", async () => {
 
 const start = async () => {
   try {
-    const port = Number(process.env.PORT) || 3000;
+    const port = env.PORT;
     await fastify.listen({ port, host: "0.0.0.0" });
   } catch (err) {
     fastify.log.error(err);
