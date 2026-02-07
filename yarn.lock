@@ -2183,10 +2183,12 @@ __metadata:
     "@prisma/adapter-pg": "npm:^7.3.0"
     "@prisma/client": "npm:^7.3.0"
     "@sinclair/typebox": "npm:^0.34.48"
+    "@types/http-errors": "npm:^2.0.5"
     "@types/node": "npm:^25.2.0"
     dotenv: "npm:^17.2.3"
     fastify: "npm:^5.0.0"
     fastify-plugin: "npm:^5.1.0"
+    http-errors: "npm:^2.0.1"
     prisma: "npm:^7.3.0"
     tsc-alias: "npm:^1.8.16"
     tsx: "npm:^4.0.0"
@@ -3164,6 +3166,13 @@ __metadata:
   dependencies:
     "@types/node": "npm:*"
   checksum: 10c0/235d2fc69741448e853333b7c3d1180a966dd2b8972c8cbcd6b2a0c6cd7f8d582ab2b8e58219dbc62cce8f1b40aa317ff78ea2201cdd8249da5025adebed6f0b
+  languageName: node
+  linkType: hard
+
+"@types/http-errors@npm:^2.0.5":
+  version: 2.0.5
+  resolution: "@types/http-errors@npm:2.0.5"
+  checksum: 10c0/00f8140fbc504f47356512bd88e1910c2f07e04233d99c88c854b3600ce0523c8cd0ba7d1897667243282eb44c59abb9245959e2428b9de004f93937f52f7c15
   languageName: node
   linkType: hard
 
@@ -5525,7 +5534,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"http-errors@npm:~2.0.1":
+"http-errors@npm:^2.0.1, http-errors@npm:~2.0.1":
   version: 2.0.1
   resolution: "http-errors@npm:2.0.1"
   dependencies:
