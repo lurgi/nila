@@ -1,3 +1,4 @@
+import createError from "http-errors";
 import type { AuthRepository } from "./auth.repository.js";
 import type { UserService } from "../user/user.service.js";
 import type { LoginBodySchema } from "@/types/schemas/auth.schema.js";
@@ -43,12 +44,12 @@ export const createAuthService = (
         if (savedToken) {
           await authRepository.delete(token);
         }
-        throw new Error("Invalid or expired refresh token");
+        throw createError(401, "Invalid or expired refresh token");
       }
 
       const user = await userService.getUserById(savedToken.userId);
       if (!user) {
-        throw new Error("User not found");
+        throw createError(401, "User not found");
       }
 
       await authRepository.delete(token);

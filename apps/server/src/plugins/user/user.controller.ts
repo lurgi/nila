@@ -1,4 +1,5 @@
 import type { FastifyRequest, FastifyReply } from "fastify";
+import createError from "http-errors";
 import type { UserService } from "./user.service.js";
 import type { UpdateUserRequest } from "@/dtos/user/request.dto.js";
 import type { UserResponse } from "@/dtos/user/response.dto.js";
@@ -15,7 +16,7 @@ export const createUserController = (userService: UserService) => ({
     const user = await userService.getUserById(userId);
 
     if (!user) {
-      return reply.code(404).send({ error: "User not found" });
+      throw createError(404, "User not found");
     }
 
     return reply.send(toUserResponse(user));

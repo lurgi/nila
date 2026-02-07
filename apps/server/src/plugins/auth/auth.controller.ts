@@ -19,12 +19,8 @@ export const createAuthController = (authService: AuthService) => ({
     request: FastifyRequest<{ Body: Static<typeof RefreshBodySchema> }>,
     reply: FastifyReply,
   ) => {
-    try {
-      const result = await authService.refresh(request.body.refreshToken);
-      return result;
-    } catch (error) {
-      return reply.status(401).send({ message: (error as Error).message });
-    }
+    const result = await authService.refresh(request.body.refreshToken);
+    return result;
   },
 
   logout: async (
