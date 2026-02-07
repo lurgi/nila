@@ -1,6 +1,7 @@
 import fp from "fastify-plugin";
 import { PrismaClient } from "../../generated/prisma/client.js";
-
+import "dotenv/config";
+import { PrismaPg } from "@prisma/adapter-pg";
 declare module "fastify" {
   interface FastifyInstance {
     prisma: PrismaClient;
@@ -9,8 +10,9 @@ declare module "fastify" {
 
 export default fp(
   async (fastify) => {
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-    const prisma = new PrismaClient({} as any);
+    const connectionString = `${process.env.DATABASE_URL}`;
+    const adapter = new PrismaPg({ connectionString });
+    const prisma = new PrismaClient({ adapter });
 
     await prisma.$connect();
 
