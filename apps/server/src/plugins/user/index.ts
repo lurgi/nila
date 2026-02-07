@@ -25,12 +25,22 @@ export default fp(
     fastify.decorate("userService", userService);
     fastify.get(
       "/me",
-      { schema: GetMeSchema, onRequest: [fastify.authenticate] },
+      {
+        schema: GetMeSchema,
+        onRequest: [
+          async (req, reply) => await fastify.authenticate(req, reply),
+        ],
+      },
       userController.getMe,
     );
     fastify.patch<{ Body: UpdateUserRequest }>(
       "/me",
-      { schema: UpdateMeSchema, onRequest: [fastify.authenticate] },
+      {
+        schema: UpdateMeSchema,
+        onRequest: [
+          async (req, reply) => await fastify.authenticate(req, reply),
+        ],
+      },
       userController.updateMe,
     );
   },
