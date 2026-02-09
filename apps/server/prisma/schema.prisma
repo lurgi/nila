@@ -13,6 +13,11 @@ enum AuthProvider {
   NAVER
 }
 
+enum FriendshipStatus {
+  PENDING
+  ACCEPTED
+}
+
 model User {
   id           String  @id @default(cuid())
   email        String  @unique
@@ -29,10 +34,46 @@ model User {
   refreshTokens RefreshToken[]
   notes         Note[]
 
+  sentFriendships     Friendship[] @relation("sentFriendships")
+  receivedFriendships Friendship[] @relation("receivedFriendships")
+  invitations         Invitation[] @relation("sentInvitations")
+  usedInvitations     Invitation[] @relation("receivedInvitations")
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@unique([provider, providerId])
+}
+
+model Friendship {
+  id          String           @id @default(cuid())
+  requesterId String
+  requester   User             @relation("sentFriendships", fields: [requesterId], references: [id], onDelete: Cascade)
+  addresseeId String
+  addressee   User             @relation("receivedFriendships", fields: [addresseeId], references: [id], onDelete: Cascade)
+  status      FriendshipStatus @default(PENDING)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  @@unique([requesterId, addresseeId])
+  @@index([requesterId])
+  @@index([addresseeId])
+}
+
+model Invitation {
+  id        String    @id @default(cuid())
+  inviterId String
+  inviter   User      @relation("sentInvitations", fields: [inviterId], references: [id], onDelete: Cascade)
+  code      String    @unique
+  usedById  String?
+  usedBy    User?     @relation("receivedInvitations", fields: [usedById], references: [id])
+  usedAt    DateTime?
+  expiresAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([inviterId])
+  @@index([code])
 }
 
 model RefreshToken {
