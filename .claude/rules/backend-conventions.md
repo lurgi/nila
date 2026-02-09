@@ -53,7 +53,10 @@ graph TD
 - **규칙**:
   - `PrismaClient`를 주입받아 생성(`createRepository` 패턴).
   - **비즈니스 로직 포함 금지**. 오직 DB CRUD만 수행.
-  - 반환 타입은 Prisma가 생성한 모델 타입(`User`, `Post` 등)을 사용.
+  - 반환 타입은 Prisma가 생성한 기본 모델 타입(`User`, `Post` 등)을 사용.
+  - `include`나 `select`를 사용하는 경우, `Prisma.ModelGetPayload`를 사용하여 정확한 반환 타입을 명시할 것.
+  - **단일 책임 원칙(SRP)** 준수: 하나의 리포지토리는 하나의 엔티티만 관리.
+  - `{}`와 같은 빈 객체 타입을 반환 타입으로 사용하지 말 것.
 
 ### Step 4: Service Layer
 - **파일**: `src/plugins/user/user.service.ts` (예시)
