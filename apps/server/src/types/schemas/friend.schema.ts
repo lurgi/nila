@@ -12,6 +12,14 @@ export const FriendSchema = Type.Object({
   friend: Type.Optional(UserSchema),
 });
 
+export const FriendResponseItemSchema = Type.Object({
+  id: Type.String(),
+  status: Type.Enum(FriendshipStatus),
+  createdAt: Type.String({ format: "date-time" }),
+  updatedAt: Type.String({ format: "date-time" }),
+  friend: Type.Optional(UserSchema),
+});
+
 export const CreateFriendBodySchema = Type.Object({
   userId: Type.String(),
 });
@@ -20,7 +28,7 @@ export const FriendIdParamsSchema = Type.Object({
   id: Type.String(),
 });
 
-export const FriendListResponseSchema = Type.Array(FriendSchema);
+export const FriendListResponseSchema = Type.Array(FriendResponseItemSchema);
 
 export const SendFriendRequestSchema = {
   body: CreateFriendBodySchema,

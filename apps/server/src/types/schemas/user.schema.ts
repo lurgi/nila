@@ -14,6 +14,8 @@ export const UserSchema = Type.Object({
   updatedAt: Type.String({ format: "date-time" }),
 });
 
+export const UserResponseSchema = UserSchema;
+
 export const UpdateUserBodySchema = Type.Object({
   name: Type.Optional(Type.String()),
   profileImage: Type.Optional(Type.String()),
@@ -24,13 +26,13 @@ export const UpdateUserBodySchema = Type.Object({
 
 export const GetMeSchema = {
   response: {
-    200: UserSchema,
+    200: UserResponseSchema,
   },
 };
 
 export const UpdateMeSchema = {
   body: UpdateUserBodySchema,
   response: {
-    200: UserSchema,
+    200: UserResponseSchema,
   },
 };

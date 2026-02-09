@@ -1,13 +1,20 @@
 import type { FastifyRequest, FastifyReply } from "fastify";
 import createError from "http-errors";
+import type { Static } from "@sinclair/typebox";
 import type { UserService } from "./user.service.js";
 import type { UpdateUserRequest } from "@/dtos/user/request.dto.js";
-import type { UserResponse } from "@/dtos/user/response.dto.js";
+import type { UserResponseSchema } from "@/types/schemas/user.schema.js";
 import type { User } from "@/generated/prisma/client.js";
+
+type UserResponse = Static<typeof UserResponseSchema>;
 
 const toUserResponse = (user: User): UserResponse => {
   const { providerId, ...rest } = user;
-  return rest;
+  return {
+    ...rest,
+    createdAt: user.createdAt.toISOString(),
+    updatedAt: user.updatedAt.toISOString(),
+  };
 };
 
 export const createUserController = (userService: UserService) => ({
