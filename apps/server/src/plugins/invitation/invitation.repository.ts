@@ -1,4 +1,8 @@
-import type { PrismaClient, Prisma, Invitation } from "@/generated/prisma/client.js";
+import type {
+  PrismaClient,
+  Prisma,
+  Invitation,
+} from "@/generated/prisma/client.js";
 
 export type InvitationWithInviter = Prisma.InvitationGetPayload<{
   include: { inviter: true };
