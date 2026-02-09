@@ -23,4 +23,15 @@ export const ProcessInvitationParamsSchema = Type.Object({
   code: Type.String(),
 });
 
-export const InvitationResponseSchema = InvitationSchema;
+export const CreateInvitationSchema = {
+  response: {
+    201: CreateInvitationResponseSchema,
+  },
+};
+
+export const ConsumeInvitationSchema = {
+  params: ProcessInvitationParamsSchema,
+  response: {
+    200: InvitationSchema,
+  },
+};

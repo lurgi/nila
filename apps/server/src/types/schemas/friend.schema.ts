@@ -21,3 +21,36 @@ export const FriendIdParamsSchema = Type.Object({
 });
 
 export const FriendListResponseSchema = Type.Array(FriendSchema);
+
+export const SendFriendRequestSchema = {
+  body: CreateFriendBodySchema,
+  response: {
+    201: FriendSchema,
+  },
+};
+
+export const AcceptFriendRequestSchema = {
+  params: FriendIdParamsSchema,
+  response: {
+    200: FriendSchema,
+  },
+};
+
+export const GetFriendsSchema = {
+  response: {
+    200: FriendListResponseSchema,
+  },
+};
+
+export const GetPendingRequestsSchema = {
+  response: {
+    200: FriendListResponseSchema,
+  },
+};
+
+export const DeleteFriendshipSchema = {
+  params: FriendIdParamsSchema,
+  response: {
+    204: Type.Null(),
+  },
+};
