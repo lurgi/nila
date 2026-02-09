@@ -69,19 +69,23 @@ export type UpdateUserRequest = Static<typeof UpdateUserSchema>
 
 ---
 
-## 3. ResponseDTO
+## 3. ResponseDTO (작성 금지)
 
-- **위치**: `src/dtos/{domain}/response.dto.ts`
-- **파생 방식**: 서비스 반환 타입 기반 + Contract 필터링
+- **원칙**: `src/dtos/{domain}/response.dto.ts` 파일은 **생성하지 않습니다**.
+- **이유**: TypeBox Schema가 검증과 타입 정의를 동시에 수행하므로, 별도의 DTO 파일은 코드 중복을 초래합니다.
+- **대체 방법**:
+  - 모든 응답 타입은 `src/types/schemas/{domain}.schema.ts`에 정의된 Schema로부터 `Static`을 사용하여 추출합니다.
+  - 데이터 가공(필드 제외, 변환 등)이 필요한 경우, 스키마 레벨에서 정의하거나 Controller 내부에서 처리합니다.
 
 ```typescript
-// src/dtos/user/response.dto.ts
-import type { UserService } from '../../plugins/user/user.service.js'
+// src/types/schemas/user.schema.ts
+export const UserResponseSchema = UserSchema // 또는 Type.Omit(UserSchema, [...])
 
-type ServiceReturnType = Awaited<ReturnType<UserService['getUserById']>>
+// src/plugins/user/user.controller.ts
+import type { Static } from '@sinclair/typebox'
+import type { UserResponseSchema } from '@/types/schemas/user.schema.js'
 
-// 민감 필드 제외 (Contract 필터링)
-export type UserResponse = Omit<NonNullable<ServiceReturnType>, 'providerId'>
+type UserResponse = Static<typeof UserResponseSchema>
 ```
 
 ---

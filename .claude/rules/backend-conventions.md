@@ -45,7 +45,7 @@ graph TD
   2. `Static<typeof Schema>`를 사용하여 DTO 타입을 추출합니다.
 - **규칙**:
   - `request.dto.ts`: 요청 바디/쿼리 파라미터 타입.
-  - `response.dto.ts`: 응답 바디 타입.
+  - **ResponseDTO 파일은 작성하지 않음**: 대신 `src/types/schemas`에 응답 스키마를 정의합니다.
 
 ### Step 3: Repository Layer
 - **파일**: `src/plugins/user/user.repository.ts` (예시)
@@ -112,8 +112,8 @@ export const createUserController = (userService: UserService) => ({
 
 ### Type Naming
 
-- **Schema**: `UserSchema`, `CreateUserSchema` (PascalCase + Schema)
-- **DTO**: `CreateUserRequest`, `UserResponse` (PascalCase + Request/Response)
+- **Schema**: `UserSchema`, `CreateUserSchema`, `UserResponseSchema` (PascalCase + Schema)
+- **DTO**: `CreateUserRequest` (PascalCase + Request)
 - **Interface/Type**: `UserService`, `UserRepository` (PascalCase)
 
 ## 4. 금지 사항 (Anti-Patterns)
