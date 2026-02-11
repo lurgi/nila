@@ -88,13 +88,73 @@ model RefreshToken {
 }
 
 model Note {
-  id        String   @id @default(cuid())
-  title     String?
-  content   String
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         String     @id @default(cuid())
+  title      String?
+  content    String
+  userId     String
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  visibility Visibility @default(FRIENDS)
+  feeling    Feeling?
 
   @@index([userId])
+}
+
+enum Visibility {
+  PRIVATE
+  FRIENDS
+}
+
+model Feeling {
+  id     String @id @default(cuid())
+  noteId String @unique
+  note   Note   @relation(fields: [noteId], references: [id], onDelete: Cascade)
+
+  status       FeelingStatus @default(Pending)
+  errorMessage String?
+  retryCount   Int           @default(0)
+
+  primaryEmotion      Emotion?
+  primaryIntensity    Float?
+  secondary1Emotion   Emotion?
+  secondary1Intensity Float?
+  secondary2Emotion   Emotion?
+  secondary2Intensity Float?
+
+  analyzedAt   DateTime?
+  modelVersion String?
+
+  @@map("feelings")
+}
+
+enum FeelingStatus {
+  Pending
+  Completed
+  Failed
+}
+
+enum Emotion {
+  Joy
+  Excitement
+  Gratitude
+  Hope
+  Pride
+  Love
+  Peace
+  Contentment
+  Relief
+  Serenity
+  Anxiety
+  Fear
+  Anger
+  Panic
+  Frustration
+  Sadness
+  Guilt
+  Shame
+  Loneliness
+  Depression
+  Hopelessness
+  Boredom
 }
