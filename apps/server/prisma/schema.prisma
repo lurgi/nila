@@ -10,7 +10,7 @@ datasource db {
 
 enum AuthProvider {
   GOOGLE
-  NAVER
+  APPLE
 }
 
 enum FriendshipStatus {
@@ -20,9 +20,10 @@ enum FriendshipStatus {
 
 model User {
   id           String  @id @default(cuid())
-  email        String  @unique
+  email        String? @unique
   name         String?
   profileImage String?
+  phoneNumber  String? @unique
 
   isEmailAgreed Boolean @default(false)
   isPushAgreed  Boolean @default(false)
