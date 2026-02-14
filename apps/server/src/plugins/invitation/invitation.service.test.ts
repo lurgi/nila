@@ -63,7 +63,9 @@ describe("createInvitationService", () => {
       const { service, invitationRepository } = build();
       invitationRepository.createInvitation
         .mockRejectedValueOnce(
-          Object.assign(new Error("Unique constraint failed"), { code: "P2002" }),
+          Object.assign(new Error("Unique constraint failed"), {
+            code: "P2002",
+          }),
         )
         .mockResolvedValueOnce({
           id: "inv-1",
@@ -80,6 +82,38 @@ describe("createInvitationService", () => {
 
       expect(invitationRepository.createInvitation).toHaveBeenCalledTimes(2);
       expect(result.id).toBe("inv-1");
+    });
+
+    it("P2002가 아닌 create 오류는 그대로 던진다", async () => {
+      const { service, invitationRepository } = build();
+      invitationRepository.createInvitation.mockRejectedValue("db-temp-error");
+
+      await expect(service.createInvitation("user-a")).rejects.toBe(
+        "db-temp-error",
+      );
+    });
+
+    it("code 속성이 없는 Error는 그대로 던진다", async () => {
+      const { service, invitationRepository } = build();
+      invitationRepository.createInvitation.mockRejectedValue(
+        new Error("unexpected-db-error"),
+      );
+
+      await expect(service.createInvitation("user-a")).rejects.toThrow(
+        "unexpected-db-error",
+      );
+    });
+
+    it("3회 연속 코드 충돌이면 503을 반환한다", async () => {
+      const { service, invitationRepository } = build();
+      invitationRepository.createInvitation.mockRejectedValue(
+        Object.assign(new Error("Unique constraint failed"), { code: "P2002" }),
+      );
+
+      await expect(service.createInvitation("user-a")).rejects.toThrow(
+        "Unable to issue invitation code. Please try again.",
+      );
+      expect(invitationRepository.createInvitation).toHaveBeenCalledTimes(3);
     });
   });
 
@@ -214,11 +248,7 @@ describe("createInvitationService", () => {
       expect(friendRepository.createFriendship).not.toHaveBeenCalled();
       expect(
         invitationRepository.consumeInvitationIfAvailable,
-      ).toHaveBeenCalledWith(
-        "inv-1",
-        "user-b",
-        now,
-      );
+      ).toHaveBeenCalledWith("inv-1", "user-b", now);
     });
 
     it("친구요청이 없으면 ACCEPTED 친구관계를 생성한다", async () => {
@@ -261,11 +291,7 @@ describe("createInvitationService", () => {
       });
       expect(
         invitationRepository.consumeInvitationIfAvailable,
-      ).toHaveBeenCalledWith(
-        "inv-1",
-        "user-b",
-        now,
-      );
+      ).toHaveBeenCalledWith("inv-1", "user-b", now);
       expect(result).toEqual(updatedInvitation);
     });
 
@@ -288,9 +314,9 @@ describe("createInvitationService", () => {
       });
       invitationRepository.consumeInvitationIfAvailable.mockResolvedValue(null);
 
-      await expect(service.consumeInvitation("user-b", "ABCDEFGH")).rejects.toThrow(
-        "Invitation already used",
-      );
+      await expect(
+        service.consumeInvitation("user-b", "ABCDEFGH"),
+      ).rejects.toThrow("Invitation already used");
     });
   });
 });
