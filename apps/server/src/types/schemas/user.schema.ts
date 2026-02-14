@@ -3,9 +3,10 @@ import { AuthProvider } from "@/generated/prisma/client.js";
 
 export const UserSchema = Type.Object({
   id: Type.String(),
-  email: Type.String({ format: "email" }),
+  email: Type.Union([Type.String({ format: "email" }), Type.Null()]),
   name: Type.Union([Type.String(), Type.Null()]),
   profileImage: Type.Union([Type.String(), Type.Null()]),
+  phoneNumber: Type.Union([Type.String(), Type.Null()]),
   isEmailAgreed: Type.Boolean(),
   isPushAgreed: Type.Boolean(),
   pushToken: Type.Union([Type.String(), Type.Null()]),
