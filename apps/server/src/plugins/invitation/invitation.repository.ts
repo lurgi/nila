@@ -36,6 +36,33 @@ export const createInvitationRepository = (prisma: PrismaClient) => ({
       data: { usedById, usedAt },
     });
   },
+
+  consumeInvitationIfAvailable: async (
+    id: string,
+    usedById: string,
+    usedAt: Date,
+  ): Promise<Invitation | null> => {
+    return prisma.$transaction(async (tx) => {
+      const result = await tx.invitation.updateMany({
+        where: {
+          id,
+          usedAt: null,
+        },
+        data: {
+          usedById,
+          usedAt,
+        },
+      });
+
+      if (result.count === 0) {
+        return null;
+      }
+
+      return tx.invitation.findUnique({
+        where: { id },
+      });
+    });
+  },
 });
 
 export type InvitationRepository = ReturnType<
