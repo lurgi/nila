@@ -1,40 +1,15 @@
 import createError from "http-errors";
 import { FriendshipStatus } from "@/generated/prisma/client.js";
+import type { LetterRepository } from "./letter.repository.js";
+import type { FriendRepository } from "../friend/friend.repository.js";
 
-type Letter = {
-  id: string;
-  senderId: string;
-  recipientId: string;
-  content: string;
-  deliverAt: Date;
-  createdAt: Date;
-  readAt?: Date | null;
-};
-
-type SentLetterMeta = Omit<Letter, "content">;
-
-export type LetterRepository = {
-  create: (data: {
-    senderId: string;
-    recipientId: string;
-    content: string;
-    deliverAt: Date;
-  }) => Promise<Letter>;
-  findInbox: (recipientId: string, now: Date) => Promise<Letter[]>;
-  findSent: (senderId: string) => Promise<Letter[]>;
-  findById: (id: string) => Promise<Letter | null>;
-};
-
-export type FriendRepository = {
-  findExistingFriendship: (
-    userId1: string,
-    userId2: string,
-  ) => Promise<{ status: FriendshipStatus } | null>;
-};
+type LetterEntity = Awaited<ReturnType<LetterRepository["findSent"]>>[number];
+type SentLetterMeta = Omit<LetterEntity, "content">;
+type FriendLookupRepository = Pick<FriendRepository, "findExistingFriendship">;
 
 export const createLetterService = (
   letterRepository: LetterRepository,
-  friendRepository: FriendRepository,
+  friendRepository: FriendLookupRepository,
 ) => ({
   sendLetter: async (
     senderId: string,
