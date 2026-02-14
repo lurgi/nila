@@ -39,11 +39,28 @@ model User {
   receivedFriendships Friendship[] @relation("receivedFriendships")
   invitations         Invitation[] @relation("sentInvitations")
   usedInvitations     Invitation[] @relation("receivedInvitations")
+  sentLetters         Letter[]     @relation("sentLetters")
+  receivedLetters     Letter[]     @relation("receivedLetters")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@unique([provider, providerId])
+}
+
+model Letter {
+  id          String    @id @default(cuid())
+  senderId    String
+  sender      User      @relation("sentLetters", fields: [senderId], references: [id], onDelete: Cascade)
+  recipientId String
+  recipient   User      @relation("receivedLetters", fields: [recipientId], references: [id], onDelete: Cascade)
+  content     String
+  deliverAt   DateTime
+  readAt      DateTime?
+  createdAt   DateTime  @default(now())
+
+  @@index([senderId, createdAt])
+  @@index([recipientId, deliverAt])
 }
 
 model Friendship {
