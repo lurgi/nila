@@ -3,6 +3,15 @@ import { FriendshipStatus } from "@/generated/prisma/client.js";
 import type { FriendRepository } from "./friend.repository.js";
 import type { UserRepository } from "../user/user.repository.js";
 
+const isUniqueConstraintError = (error: unknown): boolean => {
+  if (typeof error !== "object" || error === null) {
+    return false;
+  }
+
+  const code = "code" in error ? error.code : undefined;
+  return code === "P2002";
+};
+
 export const createFriendService = (
   friendRepository: FriendRepository,
   userRepository: UserRepository,
@@ -28,11 +37,18 @@ export const createFriendService = (
       throw createError(409, "Friend request already exists or pending");
     }
 
-    return friendRepository.createFriendship({
-      requesterId,
-      addresseeId,
-      status: FriendshipStatus.PENDING,
-    });
+    try {
+      return await friendRepository.createFriendship({
+        requesterId,
+        addresseeId,
+        status: FriendshipStatus.PENDING,
+      });
+    } catch (error) {
+      if (isUniqueConstraintError(error)) {
+        throw createError(409, "Friend request already exists or pending");
+      }
+      throw error;
+    }
   },
 
   acceptFriendRequest: async (userId: string, friendshipId: string) => {
