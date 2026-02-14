@@ -133,6 +133,30 @@ describe("createFriendService", () => {
         service.sendFriendRequest("user-a", "user-b"),
       ).rejects.toThrow("Friend request already exists or pending");
     });
+
+    it("P2002가 아닌 생성 에러는 그대로 전달한다", async () => {
+      const { service, userRepository, friendRepository } = build();
+      userRepository.findUnique.mockResolvedValue(makeUser("user-b"));
+      friendRepository.findExistingFriendship.mockResolvedValue(null);
+      friendRepository.createFriendship.mockRejectedValue("db-temporary-error");
+
+      await expect(service.sendFriendRequest("user-a", "user-b")).rejects.toBe(
+        "db-temporary-error",
+      );
+    });
+
+    it("code 속성이 없는 객체 에러는 그대로 전달한다", async () => {
+      const { service, userRepository, friendRepository } = build();
+      userRepository.findUnique.mockResolvedValue(makeUser("user-b"));
+      friendRepository.findExistingFriendship.mockResolvedValue(null);
+      friendRepository.createFriendship.mockRejectedValue(
+        new Error("unexpected-db-error"),
+      );
+
+      await expect(
+        service.sendFriendRequest("user-a", "user-b"),
+      ).rejects.toThrow("unexpected-db-error");
+    });
   });
 
   describe("acceptFriendRequest", () => {
