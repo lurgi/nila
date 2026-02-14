@@ -20,6 +20,7 @@ export const UserResponseSchema = UserSchema;
 export const UpdateUserBodySchema = Type.Object({
   name: Type.Optional(Type.String()),
   profileImage: Type.Optional(Type.String()),
+  phoneNumber: Type.Optional(Type.String()),
   isEmailAgreed: Type.Optional(Type.Boolean()),
   isPushAgreed: Type.Optional(Type.Boolean()),
   pushToken: Type.Optional(Type.String()),
