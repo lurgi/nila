@@ -58,7 +58,17 @@ graph TD
   - **단일 책임 원칙(SRP)** 준수: 하나의 리포지토리는 하나의 엔티티만 관리.
   - `{}`와 같은 빈 객체 타입을 반환 타입으로 사용하지 말 것.
 
-### Step 4: Service Layer
+### Step 4: Service Test Layer (TDD 선행)
+- **파일**: `src/plugins/{domain}/{domain}.service.test.ts`
+- **역할**: Service 계약(입력/출력/예외)을 구현 전에 고정.
+- **작업**:
+  1. 실패하는 테스트(Red)를 먼저 작성합니다.
+  2. 블랙박스 방식으로 공개 메서드 기준 테스트를 구성합니다.
+  3. 경곗값 중심으로 최소 케이스로 분기를 모두 열어 100% 커버리지를 목표로 합니다.
+- **참고 규칙**:
+  - `.claude/rules/service-test-conventions.md`
+
+### Step 5: Service Layer
 - **파일**: `src/plugins/user/user.service.ts` (예시)
 - **역할**: 비즈니스 로직 수행.
 - **규칙**:
@@ -67,7 +77,7 @@ graph TD
   - Controller에 의존하지 않음.
   - 에러 처리는 여기서 수행하거나, 커스텀 에러를 throw.
 
-### Step 5: Controller Layer
+### Step 6: Controller Layer
 - **파일**: `src/plugins/user/user.controller.ts` (예시)
 - **역할**: HTTP 요청 처리 및 응답.
 - **규칙**:
@@ -76,7 +86,7 @@ graph TD
   - 요청 데이터를 DTO로 변환하여 서비스에 전달.
   - 서비스의 결과를 응답 DTO로 변환하여 클라이언트에 반환.
 
-### Step 6: Plugin Registration
+### Step 7: Plugin Registration
 - **파일**: `src/plugins/user/index.ts` (예시)
 - **역할**: 의존성 주입 및 라우트 등록.
 - **작업**:

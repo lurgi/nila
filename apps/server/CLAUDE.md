@@ -16,3 +16,5 @@ Fastify 백엔드 서버 (Prisma + Supabase)
 - **백엔드 개발 규칙**: `.claude/rules/backend-conventions.md` (필독!)
   - 계층별 책임 및 구현 순서 정의 (DB -> Schema -> Repository -> Service -> Controller)
 - **타입 규칙**: `.claude/rules/type-conventions.md`
+- **서비스 테스트 규칙**: `.claude/rules/service-test-conventions.md`
+  - Service 계층은 Vitest 기반 TDD(테스트 선작성) + 블랙박스 + 경곗값 중심 + 최소 케이스 100% 커버리지
