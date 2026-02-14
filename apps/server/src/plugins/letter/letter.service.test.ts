@@ -146,6 +146,15 @@ describe("createLetterService", () => {
   });
 
   describe("getLetterDetail", () => {
+    it("편지가 없으면 404를 반환한다", async () => {
+      const { service, letterRepository } = build();
+      letterRepository.findById.mockResolvedValue(null);
+
+      await expect(
+        service.getLetterDetail("user-b", "missing-letter", now),
+      ).rejects.toThrow("Letter not found");
+    });
+
     it("수신자가 아니면 본문을 볼 수 없다", async () => {
       const { service, letterRepository } = build();
       letterRepository.findById.mockResolvedValue({
