@@ -3,9 +3,23 @@ import type { AuthRepository } from "./auth.repository.js";
 import type { UserService } from "../user/user.service.js";
 import type { LoginBodySchema } from "@/types/schemas/auth.schema.js";
 import type { Static } from "@sinclair/typebox";
+import { AuthProvider } from "@/generated/prisma/client.js";
 import type { User } from "@/generated/prisma/client.js";
+import { verifyAppleToken, verifyGoogleToken } from "./utils/token-verifier.js";
 
 type LoginInput = Static<typeof LoginBodySchema>;
+
+const verifyIdTokenByProvider = async (
+  provider: AuthProvider,
+  idToken: string,
+) => {
+  switch (provider) {
+    case AuthProvider.GOOGLE:
+      return verifyGoogleToken(idToken);
+    case AuthProvider.APPLE:
+      return verifyAppleToken(idToken);
+  }
+};
 
 export const createAuthService = (
   authRepository: AuthRepository,
@@ -32,9 +46,24 @@ export const createAuthService = (
 
   return {
     login: async (data: LoginInput) => {
-      const user = await userService.findOrCreateByProvider(data);
+      try {
+        const verifiedToken = await verifyIdTokenByProvider(
+          data.provider,
+          data.idToken,
+        );
 
-      return issueTokens(user);
+        const user = await userService.findOrCreateByProvider({
+          provider: data.provider,
+          providerId: verifiedToken.providerId,
+          email: verifiedToken.email,
+          name: verifiedToken.name,
+          profileImage: verifiedToken.profileImage,
+        });
+
+        return issueTokens(user);
+      } catch {
+        throw createError(401, "Unauthorized");
+      }
     },
 
     refresh: async (token: string) => {
