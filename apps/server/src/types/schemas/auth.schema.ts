@@ -4,10 +4,7 @@ import { UserSchema } from "./user.schema.js";
 
 export const LoginBodySchema = Type.Object({
   provider: Type.Enum(AuthProvider),
-  providerId: Type.String(),
-  email: Type.String({ format: "email" }),
-  name: Type.Optional(Type.String()),
-  profileImage: Type.Optional(Type.String()),
+  idToken: Type.String(),
 });
 
 export const TokenResponseSchema = Type.Object({
