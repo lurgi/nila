@@ -3,6 +3,7 @@ import createError from "http-errors";
 import type { Static } from "@sinclair/typebox";
 import type { UserService } from "./user.service.js";
 import type {
+  UpdateProfileRequest,
   UpdateUserRequest,
   UserResponseSchema,
 } from "@/types/schemas/user.schema.js";
@@ -37,6 +38,16 @@ export const createUserController = (userService: UserService) => ({
   ) => {
     const userId = request.user.id;
     const user = await userService.updateUser(userId, request.body);
+
+    return reply.send(toUserResponse(user));
+  },
+
+  updateProfile: async (
+    request: FastifyRequest<{ Body: UpdateProfileRequest }>,
+    reply: FastifyReply,
+  ) => {
+    const userId = request.user.id;
+    const user = await userService.updateProfile(userId, request.body);
 
     return reply.send(toUserResponse(user));
   },

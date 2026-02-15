@@ -5,6 +5,8 @@ import { createUserController } from "./user.controller.js";
 import {
   GetMeSchema,
   UpdateMeSchema,
+  UpdateProfileSchema,
+  type UpdateProfileRequest,
   type UpdateUserRequest,
 } from "@/types/schemas/user.schema.js";
 import type { UserService } from "./user.service.js";
@@ -45,6 +47,16 @@ export default fp(
         ],
       },
       userController.updateMe,
+    );
+    fastify.patch<{ Body: UpdateProfileRequest }>(
+      "/me/profile",
+      {
+        schema: UpdateProfileSchema,
+        onRequest: [
+          async (req, reply) => await fastify.authenticate(req, reply),
+        ],
+      },
+      userController.updateProfile,
     );
   },
   {
