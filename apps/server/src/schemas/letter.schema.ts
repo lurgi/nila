@@ -1,4 +1,5 @@
 import { Type } from "@sinclair/typebox";
+import type { Static } from "@sinclair/typebox";
 
 export const LetterSchema = Type.Object({
   id: Type.String(),
@@ -54,3 +55,5 @@ export const GetLetterDetailSchema = {
     200: LetterSchema,
   },
 };
+
+export type CreateLetterRequest = Static<typeof CreateLetterBodySchema>;

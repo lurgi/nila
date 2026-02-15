@@ -10,8 +10,8 @@ import {
   GetFriendsSchema,
   GetPendingRequestsSchema,
   DeleteFriendshipSchema,
-} from "@/types/schemas/friend.schema.js";
-import type { CreateFriendRequest } from "@/dtos/friend/request.dto.js";
+  type CreateFriendRequest,
+} from "@/schemas/friend.schema.js";
 
 export default fp(
   async (fastify) => {

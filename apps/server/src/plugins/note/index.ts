@@ -3,17 +3,15 @@ import type { FastifyRequest, FastifyReply } from "fastify";
 import { createNoteRepository } from "./note.repository.js";
 import { createNoteService } from "./note.service.js";
 import { createNoteController } from "./note.controller.js";
-import type {
-  CreateNoteRequest,
-  UpdateNoteRequest,
-} from "@/dtos/note/request.dto.js";
 import {
   GetNotesSchema,
   GetNoteSchema,
   CreateNoteSchema,
   UpdateNoteSchema,
   DeleteNoteSchema,
-} from "@/types/schemas/note.schema.js";
+  type CreateNoteRequest,
+  type UpdateNoteRequest,
+} from "@/schemas/note.schema.js";
 
 export default fp(
   async (fastify) => {

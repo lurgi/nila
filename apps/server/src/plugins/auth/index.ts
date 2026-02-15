@@ -8,7 +8,7 @@ import {
   LoginSchema,
   RefreshSchema,
   LogoutSchema,
-} from "@/types/schemas/auth.schema.js";
+} from "@/schemas/auth.schema.js";
 
 import type { FastifyRequest, FastifyReply } from "fastify";
 

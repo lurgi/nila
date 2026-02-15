@@ -4,7 +4,7 @@ import type { UserRepository } from "./user.repository.js";
 import {
   HANDLE_PATTERN,
   type UpdateProfileRequest,
-} from "@/types/schemas/user.schema.js";
+} from "@/schemas/user.schema.js";
 
 type FindOrCreateByProviderInput = Pick<
   Prisma.UserCreateInput,

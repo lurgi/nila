@@ -1,6 +1,5 @@
 import fp from "fastify-plugin";
 import type { FastifyReply, FastifyRequest } from "fastify";
-import type { CreateLetterRequest } from "@/dtos/letter/request.dto.js";
 import { createLetterRepository } from "./letter.repository.js";
 import { createLetterService } from "./letter.service.js";
 import { createLetterController } from "./letter.controller.js";
@@ -10,7 +9,8 @@ import {
   GetInboxLettersSchema,
   GetLetterDetailSchema,
   GetSentLettersSchema,
-} from "@/types/schemas/letter.schema.js";
+  type CreateLetterRequest,
+} from "@/schemas/letter.schema.js";
 
 export default fp(
   async (fastify) => {

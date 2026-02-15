@@ -2,7 +2,7 @@ import createError from "http-errors";
 import type {
   CreateNoteRequest,
   UpdateNoteRequest,
-} from "@/dtos/note/request.dto.js";
+} from "@/schemas/note.schema.js";
 import type { NoteRepository } from "./note.repository.js";
 
 export const createNoteService = (noteRepository: NoteRepository) => {

@@ -1,5 +1,5 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
-import type { CreateLetterRequest } from "@/dtos/letter/request.dto.js";
+import type { CreateLetterRequest } from "@/schemas/letter.schema.js";
 import type { LetterService } from "./letter.service.js";
 
 const toIsoDateString = (value: Date | null) => {

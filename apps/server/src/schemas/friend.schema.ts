@@ -1,4 +1,5 @@
 import { Type } from "@sinclair/typebox";
+import type { Static } from "@sinclair/typebox";
 import { UserSchema } from "./user.schema.js";
 import { FriendshipStatus } from "@/generated/prisma/client.js";
 
@@ -62,3 +63,5 @@ export const DeleteFriendshipSchema = {
     204: Type.Null(),
   },
 };
+
+export type CreateFriendRequest = Static<typeof CreateFriendBodySchema>;

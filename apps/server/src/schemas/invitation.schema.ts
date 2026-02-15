@@ -1,4 +1,5 @@
 import { Type } from "@sinclair/typebox";
+import type { Static } from "@sinclair/typebox";
 import { UserSchema } from "./user.schema.js";
 
 export const InvitationSchema = Type.Object({
@@ -35,3 +36,7 @@ export const ConsumeInvitationSchema = {
     200: InvitationSchema,
   },
 };
+
+export type ConsumeInvitationRequest = Static<
+  typeof ProcessInvitationParamsSchema
+>;

@@ -4,7 +4,7 @@ import type { Static } from "@sinclair/typebox";
 import type {
   LoginBodySchema,
   RefreshBodySchema,
-} from "@/types/schemas/auth.schema.js";
+} from "@/schemas/auth.schema.js";
 
 export const createAuthController = (authService: AuthService) => ({
   login: async (

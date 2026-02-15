@@ -3,7 +3,7 @@ import type { NoteService } from "./note.service.js";
 import type {
   CreateNoteRequest,
   UpdateNoteRequest,
-} from "@/dtos/note/request.dto.js";
+} from "@/schemas/note.schema.js";
 
 export const createNoteController = (noteService: NoteService) => ({
   getNotes: async (request: FastifyRequest, reply: FastifyReply) => {

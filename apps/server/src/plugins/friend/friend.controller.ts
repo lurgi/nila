@@ -1,6 +1,6 @@
 import type { FastifyRequest, FastifyReply } from "fastify";
 import type { FriendService } from "./friend.service.js";
-import type { CreateFriendRequest } from "@/dtos/friend/request.dto.js";
+import type { CreateFriendRequest } from "@/schemas/friend.schema.js";
 
 export const createFriendController = (friendService: FriendService) => ({
   sendFriendRequest: async (

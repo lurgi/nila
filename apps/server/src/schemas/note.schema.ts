@@ -1,4 +1,5 @@
 import { Type } from "@sinclair/typebox";
+import type { Static } from "@sinclair/typebox";
 
 export const NoteSchema = Type.Object({
   id: Type.String(),
@@ -59,3 +60,6 @@ export const DeleteNoteSchema = {
     204: Type.Null(),
   },
 };
+
+export type CreateNoteRequest = Static<typeof CreateNoteBodySchema>;
+export type UpdateNoteRequest = Static<typeof UpdateNoteBodySchema>;
