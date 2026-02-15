@@ -15,14 +15,6 @@ apps/server/src/
 │       ├── auth.schema.ts
 │       └── common.schema.ts        # 공통 스키마 (페이지네이션 등)
 │
-├── dtos/                           # DTO 정의 (도메인별)
-│   ├── user/
-│   │   ├── request.dto.ts          # RequestDTO
-│   │   └── response.dto.ts         # ResponseDTO
-│   └── auth/
-│       ├── request.dto.ts
-│       └── response.dto.ts
-│
 └── plugins/                        # 도메인 플러그인
     └── {domain}/
         ├── {domain}.repository.ts  # Prisma 타입 직접 사용
@@ -54,18 +46,25 @@ export const UserIdParamSchema = Type.Object({
 
 ---
 
-## 2. RequestDTO
+## 2. Request Type SSoT
 
-- **위치**: `src/dtos/{domain}/request.dto.ts`
-- **파생 방식**: Typebox `Static<typeof Schema>`
+- **원칙**: HTTP 요청 타입의 SSoT는 `src/types/schemas/{domain}.schema.ts`입니다.
+- **권장 방식**: 스키마 파일에서 `Schema`와 `Static<typeof Schema>` 타입을 함께 export합니다.
 
 ```typescript
-// src/dtos/user/request.dto.ts
-import type { Static } from '@sinclair/typebox'
-import type { UpdateUserSchema } from '../../types/schemas/user.schema.js'
+// src/types/schemas/user.schema.ts
+import { Type, type Static } from '@sinclair/typebox'
 
-export type UpdateUserRequest = Static<typeof UpdateUserSchema>
+export const UpdateUserBodySchema = Type.Object({
+  name: Type.Optional(Type.String()),
+})
+
+export type UpdateUserRequest = Static<typeof UpdateUserBodySchema>
 ```
+
+- `src/dtos/*/request.dto.ts`는 기본적으로 생성하지 않습니다.
+- 예외: 스키마 기반 타입에 추가 메타 타입 결합이 필요한 경우만 제한적으로 허용합니다.
+- 단순 `Static` 래핑(1:1 별칭) 목적의 DTO 파일 생성은 금지합니다.
 
 ---
 
@@ -111,9 +110,18 @@ export const createUserRepository = (prisma: PrismaClient) => ({
 ## 타입 흐름
 
 ```
-[Request] → Controller(RequestDTO) → Service → Repository(Prisma) → DB
+[Request] → Controller(Schema-exported Request Type) → Service → Repository(Prisma) → DB
 [Response] ← Controller(ResponseDTO) ← Service ← Repository(Prisma Model) ← DB
 ```
+
+---
+
+## 5. Service Input Type Rule
+
+- Service 입력 타입은 두 가지로 구분합니다.
+- HTTP에서 직접 유입되는 입력: `schema.ts`에서 export한 request type 사용
+- Service 간 내부 계약 입력: 도메인 타입/Prisma 파생 타입 사용 가능
+- 금지: Controller 전용 HTTP 문맥 타입(`FastifyRequest`, `FastifyReply`)을 Service 시그니처에 사용
 
 ---
 

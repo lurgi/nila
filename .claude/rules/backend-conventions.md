@@ -37,14 +37,15 @@ graph TD
   2. `npx prisma migrate dev` 또는 `npx prisma db push`로 DB에 반영합니다.
   3. `npx prisma generate`로 클라이언트를 갱신합니다.
 
-### Step 2: Schema/DTO Layer (TypeBox)
-- **파일**: `src/types/schemas/user.schema.ts` (예시), `src/dtos/user/request.dto.ts` (예시)
-- **역할**: API 요청/응답 검증 및 데이터 전송 객체 정의.
+### Step 2: Schema Layer (TypeBox)
+- **파일**: `src/types/schemas/user.schema.ts` (예시)
+- **역할**: API 요청/응답 검증 및 요청 타입의 SSoT 정의.
 - **작업**:
   1. `@sinclair/typebox`를 사용하여 Validation Schema를 작성합니다.
-  2. `Static<typeof Schema>`를 사용하여 DTO 타입을 추출합니다.
+  2. `Static<typeof Schema>`를 사용하여 요청 타입을 같은 파일에서 함께 export합니다.
 - **규칙**:
-  - `request.dto.ts`: 요청 바디/쿼리 파라미터 타입.
+  - 요청 타입은 `schema.ts`에서 직접 export합니다.
+  - 단순 `Static` 래핑 목적의 `request.dto.ts`는 작성하지 않습니다.
   - **ResponseDTO 파일은 작성하지 않음**: 대신 `src/types/schemas`에 응답 스키마를 정의합니다.
 
 ### Step 3: Repository Layer
@@ -83,8 +84,8 @@ graph TD
 - **규칙**:
   - `Service`를 주입받아 생성(`createController` 패턴).
   - `FastifyRequest`, `FastifyReply` 객체 사용.
-  - 요청 데이터를 DTO로 변환하여 서비스에 전달.
-  - 서비스의 결과를 응답 DTO로 변환하여 클라이언트에 반환.
+  - 요청 데이터를 schema-exported request type으로 서비스에 전달.
+  - 서비스의 결과를 응답 스키마 계약에 맞게 변환하여 클라이언트에 반환.
 
 ### Step 7: Plugin Registration
 - **파일**: `src/plugins/user/index.ts` (예시)
@@ -123,7 +124,7 @@ export const createUserController = (userService: UserService) => ({
 ### Type Naming
 
 - **Schema**: `UserSchema`, `CreateUserSchema`, `UserResponseSchema` (PascalCase + Schema)
-- **DTO**: `CreateUserRequest` (PascalCase + Request)
+- **Request Type**: `CreateUserRequest` (PascalCase + Request, schema 파일에서 export)
 - **Interface/Type**: `UserService`, `UserRepository` (PascalCase)
 
 ## 4. 금지 사항 (Anti-Patterns)
