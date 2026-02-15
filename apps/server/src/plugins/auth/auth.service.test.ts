@@ -39,6 +39,7 @@ describe("createAuthService", () => {
       getUserByEmail: vi.fn(),
       findOrCreateByProvider: vi.fn(),
       updateUser: vi.fn(),
+      updateProfile: vi.fn(),
     };
 
     const jwt = {
