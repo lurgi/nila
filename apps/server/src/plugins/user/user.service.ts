@@ -1,10 +1,17 @@
+import createError from "http-errors";
 import type { Prisma } from "@/generated/prisma/client.js";
 import type { UserRepository } from "./user.repository.js";
+import {
+  HANDLE_PATTERN,
+  type UpdateProfileRequest,
+} from "@/types/schemas/user.schema.js";
 
 type FindOrCreateByProviderInput = Pick<
   Prisma.UserCreateInput,
   "provider" | "providerId" | "email" | "phoneNumber" | "name" | "profileImage"
 >;
+
+const HANDLE_REGEX = new RegExp(HANDLE_PATTERN);
 
 export const createUserService = (userRepository: UserRepository) => ({
   getUserById: (id: string) => {
@@ -45,6 +52,39 @@ export const createUserService = (userRepository: UserRepository) => ({
 
   updateUser: (id: string, data: Prisma.UserUpdateInput) => {
     return userRepository.update(id, data);
+  },
+
+  updateProfile: async (id: string, data: UpdateProfileRequest) => {
+    const updateData: Prisma.UserUpdateInput = {};
+
+    if (data.name !== undefined) {
+      updateData.name = data.name;
+    }
+
+    if (data.phoneNumber !== undefined) {
+      updateData.phoneNumber = data.phoneNumber;
+    }
+
+    if (data.handle !== undefined) {
+      const handleNormalized = data.handle.trim().toLowerCase();
+
+      if (!HANDLE_REGEX.test(handleNormalized)) {
+        throw createError(400, "Invalid handle format");
+      }
+
+      const existingUser = await userRepository.findUnique({
+        handleNormalized,
+      });
+
+      if (existingUser && existingUser.id !== id) {
+        throw createError(409, "Handle already taken");
+      }
+
+      updateData.handle = data.handle;
+      updateData.handleNormalized = handleNormalized;
+    }
+
+    return userRepository.update(id, updateData);
   },
 });
 

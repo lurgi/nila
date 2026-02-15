@@ -2,8 +2,11 @@ import fp from "fastify-plugin";
 import { createUserRepository } from "./user.repository.js";
 import { createUserService } from "./user.service.js";
 import { createUserController } from "./user.controller.js";
-import { GetMeSchema, UpdateMeSchema } from "@/types/schemas/user.schema.js";
-import type { UpdateUserRequest } from "@/dtos/user/request.dto.js";
+import {
+  GetMeSchema,
+  UpdateMeSchema,
+  type UpdateUserRequest,
+} from "@/types/schemas/user.schema.js";
 import type { UserService } from "./user.service.js";
 import type { User } from "@/generated/prisma/client.js";
 

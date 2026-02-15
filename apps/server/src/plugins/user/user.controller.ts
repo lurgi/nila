@@ -2,8 +2,10 @@ import type { FastifyRequest, FastifyReply } from "fastify";
 import createError from "http-errors";
 import type { Static } from "@sinclair/typebox";
 import type { UserService } from "./user.service.js";
-import type { UpdateUserRequest } from "@/dtos/user/request.dto.js";
-import type { UserResponseSchema } from "@/types/schemas/user.schema.js";
+import type {
+  UpdateUserRequest,
+  UserResponseSchema,
+} from "@/types/schemas/user.schema.js";
 import type { User } from "@/generated/prisma/client.js";
 
 type UserResponse = Static<typeof UserResponseSchema>;
