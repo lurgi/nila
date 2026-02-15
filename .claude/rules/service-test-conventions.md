@@ -72,9 +72,8 @@ Nila Server의 Service 계층 테스트는 반드시 **Vitest 기반 TDD**로 �
 
 ## 9. 타입/검증 위치 규칙
 
-- HTTP 요청 타입의 SSoT는 `types/schemas/*.schema.ts`입니다.
+- HTTP 요청 타입의 SSoT는 `schemas/*.schema.ts`입니다.
 - Service 테스트는 schema-exported request type 기준으로 시나리오를 구성합니다.
 - 단순 `Static` 1:1 래핑 `request.dto.ts`에 의존한 테스트 작성은 금지합니다.
 - 형식 검증(문자 패턴, 길이, nullable 등)은 schema에서 수행합니다.
 - Service는 비즈니스 규칙(권한, 중복, 상태 전이, 경합/트랜잭션 에러 매핑)을 검증합니다.
-

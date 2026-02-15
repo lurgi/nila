@@ -38,7 +38,7 @@ graph TD
   3. `npx prisma generate`로 클라이언트를 갱신합니다.
 
 ### Step 2: Schema Layer (TypeBox)
-- **파일**: `src/types/schemas/user.schema.ts` (예시)
+- **파일**: `src/schemas/user.schema.ts` (예시)
 - **역할**: API 요청/응답 검증 및 요청 타입의 SSoT 정의.
 - **작업**:
   1. `@sinclair/typebox`를 사용하여 Validation Schema를 작성합니다.
@@ -46,7 +46,7 @@ graph TD
 - **규칙**:
   - 요청 타입은 `schema.ts`에서 직접 export합니다.
   - 단순 `Static` 래핑 목적의 `request.dto.ts`는 작성하지 않습니다.
-  - **ResponseDTO 파일은 작성하지 않음**: 대신 `src/types/schemas`에 응답 스키마를 정의합니다.
+  - **ResponseDTO 파일은 작성하지 않음**: 대신 `src/schemas`에 응답 스키마를 정의합니다.
 
 ### Step 3: Repository Layer
 - **파일**: `src/plugins/user/user.repository.ts` (예시)

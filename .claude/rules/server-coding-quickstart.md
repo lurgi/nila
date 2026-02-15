@@ -8,7 +8,7 @@
 
 ## 2) 타입 SSoT
 
-- HTTP 요청 타입의 SSoT는 `types/schemas/*.schema.ts`입니다.
+- HTTP 요청 타입의 SSoT는 `schemas/*.schema.ts`입니다.
 - 스키마 파일에서 `Schema`와 `Static<typeof Schema>` 타입을 함께 export합니다.
 - 단순 `request.dto.ts` 1:1 래핑은 만들지 않습니다.
 

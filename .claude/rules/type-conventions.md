@@ -9,11 +9,10 @@ alwaysApply: false
 
 ```
 apps/server/src/
-├── types/
-│   └── schemas/                    # Typebox 스키마 정의
-│       ├── user.schema.ts
-│       ├── auth.schema.ts
-│       └── common.schema.ts        # 공통 스키마 (페이지네이션 등)
+├── schemas/                        # Typebox 스키마 정의
+│   ├── user.schema.ts
+│   ├── auth.schema.ts
+│   └── common.schema.ts            # 공통 스키마 (페이지네이션 등)
 │
 └── plugins/                        # 도메인 플러그인
     └── {domain}/
@@ -26,12 +25,12 @@ apps/server/src/
 
 ## 1. Schema (Typebox)
 
-- **위치**: `src/types/schemas/{domain}.schema.ts`
+- **위치**: `src/schemas/{domain}.schema.ts`
 - **용도**: Fastify 라우트 검증 + 타입 정의
 - **라이브러리**: `@sinclair/typebox`
 
 ```typescript
-// src/types/schemas/user.schema.ts
+// src/schemas/user.schema.ts
 import { Type } from '@sinclair/typebox'
 
 export const UpdateUserSchema = Type.Object({
@@ -48,11 +47,11 @@ export const UserIdParamSchema = Type.Object({
 
 ## 2. Request Type SSoT
 
-- **원칙**: HTTP 요청 타입의 SSoT는 `src/types/schemas/{domain}.schema.ts`입니다.
+- **원칙**: HTTP 요청 타입의 SSoT는 `src/schemas/{domain}.schema.ts`입니다.
 - **권장 방식**: 스키마 파일에서 `Schema`와 `Static<typeof Schema>` 타입을 함께 export합니다.
 
 ```typescript
-// src/types/schemas/user.schema.ts
+// src/schemas/user.schema.ts
 import { Type, type Static } from '@sinclair/typebox'
 
 export const UpdateUserBodySchema = Type.Object({
@@ -73,16 +72,16 @@ export type UpdateUserRequest = Static<typeof UpdateUserBodySchema>
 - **원칙**: `src/dtos/{domain}/response.dto.ts` 파일은 **생성하지 않습니다**.
 - **이유**: TypeBox Schema가 검증과 타입 정의를 동시에 수행하므로, 별도의 DTO 파일은 코드 중복을 초래합니다.
 - **대체 방법**:
-  - 모든 응답 타입은 `src/types/schemas/{domain}.schema.ts`에 정의된 Schema로부터 `Static`을 사용하여 추출합니다.
+  - 모든 응답 타입은 `src/schemas/{domain}.schema.ts`에 정의된 Schema로부터 `Static`을 사용하여 추출합니다.
   - 데이터 가공(필드 제외, 변환 등)이 필요한 경우, 스키마 레벨에서 정의하거나 Controller 내부에서 처리합니다.
 
 ```typescript
-// src/types/schemas/user.schema.ts
+// src/schemas/user.schema.ts
 export const UserResponseSchema = UserSchema // 또는 Type.Omit(UserSchema, [...])
 
 // src/plugins/user/user.controller.ts
 import type { Static } from '@sinclair/typebox'
-import type { UserResponseSchema } from '@/types/schemas/user.schema.js'
+import type { UserResponseSchema } from '@/schemas/user.schema.js'
 
 type UserResponse = Static<typeof UserResponseSchema>
 ```
