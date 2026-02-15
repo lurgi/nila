@@ -19,11 +19,13 @@ enum FriendshipStatus {
 }
 
 model User {
-  id           String  @id @default(cuid())
-  email        String? @unique
-  name         String?
-  profileImage String?
-  phoneNumber  String? @unique
+  id               String  @id @default(cuid())
+  email            String? @unique
+  name             String?
+  handle           String?
+  handleNormalized String? @unique
+  profileImage     String?
+  phoneNumber      String? @unique
 
   isEmailAgreed Boolean @default(false)
   isPushAgreed  Boolean @default(false)
