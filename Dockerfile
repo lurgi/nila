@@ -3,8 +3,6 @@ RUN corepack enable
 
 WORKDIR /app
 ARG DATABASE_URL
-ARG JWT_SECRET
-ENV JWT_SECRET=$JWT_SECRET
 COPY package.json yarn.lock .yarnrc.yml ./
 COPY apps/server ./apps/server
 
