@@ -137,47 +137,48 @@ describe("createUserService", () => {
   });
 
   describe("updateProfile(handle)", () => {
+    it("phoneNumber만 전달되면 해당 값으로 업데이트한다", async () => {
+      const { service, userRepository } = build();
+      const updated = makeUser("user-a");
+      userRepository.update.mockResolvedValue(updated);
+
+      const result = await service.updateProfile("user-a", {
+        phoneNumber: "01012345678",
+      });
+
+      expect(userRepository.findUnique).not.toHaveBeenCalled();
+      expect(userRepository.update).toHaveBeenCalledWith("user-a", {
+        phoneNumber: "01012345678",
+      });
+      expect(result).toEqual(updated);
+    });
+
     it("handle 형식이 잘못되면 거절한다", async () => {
       const { service } = build();
-      const updateProfile = Reflect.get(service, "updateProfile");
-
-      if (typeof updateProfile !== "function") {
-        throw new Error("updateProfile is not implemented");
-      }
 
       await expect(
-        updateProfile("user-a", { handle: "Invalid Handle!" }),
+        service.updateProfile("user-a", { handle: "Invalid Handle!" }),
       ).rejects.toThrow("Invalid handle format");
     });
 
     it("이미 사용 중인 handle이면 거절한다", async () => {
       const { service, userRepository } = build();
-      const updateProfile = Reflect.get(service, "updateProfile");
-
-      if (typeof updateProfile !== "function") {
-        throw new Error("updateProfile is not implemented");
-      }
 
       userRepository.findUnique.mockResolvedValue(makeUser("user-b"));
 
       await expect(
-        updateProfile("user-a", { handle: "taken.handle" }),
+        service.updateProfile("user-a", { handle: "taken.handle" }),
       ).rejects.toThrow("Handle already taken");
     });
 
     it("유효한 handle이면 normalized 값과 함께 업데이트한다", async () => {
       const { service, userRepository } = build();
-      const updateProfile = Reflect.get(service, "updateProfile");
-
-      if (typeof updateProfile !== "function") {
-        throw new Error("updateProfile is not implemented");
-      }
 
       const updated = makeUser("user-a");
       userRepository.findUnique.mockResolvedValue(null);
       userRepository.update.mockResolvedValue(updated);
 
-      const result = await updateProfile("user-a", {
+      const result = await service.updateProfile("user-a", {
         name: "Nila",
         handle: "Nila.Dev",
       });
