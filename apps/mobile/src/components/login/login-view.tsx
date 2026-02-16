@@ -1,7 +1,8 @@
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import { colors, radius, spacing, typography } from "@/src/theme/tokens";
+import { Image, StyleSheet, View } from "react-native";
+import { SocialLoginButton } from "@/src/components/common/social-login-button";
+import { colors, radius, spacing } from "@/src/theme/tokens";
 
 type LoginViewProps = {
   onPressApple?: () => void;
@@ -21,25 +22,20 @@ export function LoginView({ onPressApple, onPressGoogle }: LoginViewProps) {
 
       <View style={styles.bottomSection}>
         <View style={styles.buttonGroup}>
-          <Pressable
-            style={styles.appleButton}
+          <SocialLoginButton
+            variant="apple"
+            label="Apple로 계속하기"
             onPress={onPressApple}
-            accessibilityRole="button"
-            accessibilityLabel="Apple로 계속하기"
-          >
-            <Ionicons name="logo-apple" size={18} color={colors.appleButtonText} />
-            <Text style={styles.appleButtonText}>Apple로 계속하기</Text>
-          </Pressable>
-
-          <Pressable
-            style={styles.googleButton}
+            icon={
+              <Ionicons name="logo-apple" size={18} color={colors.appleButtonText} />
+            }
+          />
+          <SocialLoginButton
+            variant="google"
+            label="Google로 계속하기"
             onPress={onPressGoogle}
-            accessibilityRole="button"
-            accessibilityLabel="Google로 계속하기"
-          >
-            <AntDesign name="google" size={16} color="#ea4335" />
-            <Text style={styles.googleButtonText}>Google로 계속하기</Text>
-          </Pressable>
+            icon={<AntDesign name="google" size={16} color="#ea4335" />}
+          />
         </View>
       </View>
     </View>
@@ -70,35 +66,5 @@ const styles = StyleSheet.create({
   },
   buttonGroup: {
     gap: spacing.sm,
-  },
-  appleButton: {
-    height: 54,
-    borderRadius: radius.full,
-    backgroundColor: colors.appleButton,
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "row",
-    gap: spacing.sm,
-  },
-  appleButtonText: {
-    color: colors.appleButtonText,
-    fontSize: typography.button,
-    fontWeight: "600",
-  },
-  googleButton: {
-    height: 54,
-    borderRadius: radius.full,
-    backgroundColor: colors.googleButton,
-    borderWidth: 1,
-    borderColor: colors.border,
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "row",
-    gap: spacing.sm,
-  },
-  googleButtonText: {
-    color: colors.googleButtonText,
-    fontSize: typography.button,
-    fontWeight: "600",
   },
 });
