@@ -1,12 +1,11 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
-
-import { useColorScheme } from '@/components/useColorScheme';
+import { ROOT_INITIAL_ROUTE, ROOT_STACK_OPTIONS } from '@/src/navigation/root-stack';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -15,7 +14,7 @@ export {
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "index",
+  initialRouteName: ROOT_INITIAL_ROUTE,
 };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -46,14 +45,12 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme();
-
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={DefaultTheme}>
       <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+        <Stack.Screen name="index" options={ROOT_STACK_OPTIONS.index} />
+        <Stack.Screen name="(tabs)" options={ROOT_STACK_OPTIONS.tabs} />
+        <Stack.Screen name="modal" options={ROOT_STACK_OPTIONS.modal} />
       </Stack>
     </ThemeProvider>
   );
