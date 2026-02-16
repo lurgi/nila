@@ -102,3 +102,30 @@ Component 테스트 금지사항:
 - color, spacing, radius, typography를 토큰으로 관리
 - `components`는 토큰을 통해 스타일을 적용
 - 매직 넘버/매직 컬러 하드코딩을 지양
+
+## 9. Animation 규칙
+
+애니메이션의 최종 책임(언제/어떤 모션을 적용할지 결정)은 `screens`가 가집니다.
+
+### 9-1. 선언 위치
+
+- `src/theme/motion.ts`: 전역 모션 토큰(duration, easing, spring preset)
+- `src/animations/presets/*.ts`: 재사용 애니메이션 프리셋
+- `src/hooks/use-*-motion.ts`: 화면별 애니메이션 상태/스타일 계산
+
+### 9-2. 계층 책임
+
+- `screens`: 모션 시나리오 결정 및 주입
+- `hooks/use-*-motion`: 애니메이션 값/스타일 계산
+- `components`: 주입받은 animated props를 렌더링에만 사용
+
+### 9-3. 금지 사항
+
+- `components`에서 화면 오케스트레이션 애니메이션 로직 작성 금지
+- `components`에서 비즈니스 상태와 애니메이션 상태를 직접 결합 금지
+- duration/easing/spring 값 하드코딩(토큰 사용)
+
+### 9-4. 예외 허용
+
+- `components` 내부의 단순 인터랙션 반응(press feedback, hover 유사 효과)은 허용
+- 단, 도메인 로직/API/네비게이션과 결합하지 않습니다.
