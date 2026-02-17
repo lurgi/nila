@@ -129,3 +129,46 @@ Component 테스트 금지사항:
 
 - `components` 내부의 단순 인터랙션 반응(press feedback, hover 유사 효과)은 허용
 - 단, 도메인 로직/API/네비게이션과 결합하지 않습니다.
+
+## 10. Form 규칙 (RHF + TypeBox Contract)
+
+Form은 `react-hook-form`을 표준으로 사용하며, 서버(Fastify)와 동일한 schema 계약을 공유합니다.
+
+### 10-1. Contract SSoT
+
+- Form contract의 단일 출처는 공유 schema 패키지입니다. (예: `packages/contracts`)
+- 모바일과 서버는 같은 TypeBox schema를 import해 사용합니다.
+- 모바일 전용으로 서버 요청 타입을 다시 정의하지 않습니다.
+
+### 10-2. 타입 생성 규칙
+
+- Form 값 타입은 schema 파일이 export한 타입 별칭을 우선 사용합니다.
+- 예: `NicknameFormRequest` (schema 파일 내부에서 `Static<typeof ...>`로 생성된 타입)
+- 모바일 코드에서 동일 타입을 다시 `Static<typeof ...>`로 재생성하지 않습니다.
+- 수동 타입 선언(`type NicknameInput = {...}`)으로 중복 정의하지 않습니다.
+
+### 10-3. RHF 사용 규칙
+
+- 모든 Form은 `useForm<T>()`를 사용합니다.
+- `T`는 schema-exported 타입만 허용합니다.
+- 검증은 resolver 기반으로 통일하며, schema와 불일치하는 ad-hoc 검증 로직을 금지합니다.
+
+### 10-4. 레이어 책임
+
+- `components`: 입력 UI/에러 렌더링만 담당 (로직 금지)
+- `hooks/use-*-form`: RHF 초기화, resolver, submit 핸들러, 서버 에러 매핑
+- `screens`: form hook 주입 및 화면 조립
+
+Form 로직은 `hooks`에만 둡니다.
+
+### 10-5. 서버 에러 매핑
+
+- 서버 필드 에러는 RHF `setError`로 매핑합니다.
+- 매핑 규칙은 훅 내부 유틸 함수로 표준화합니다.
+- 컴포넌트에서 서버 에러 코드를 직접 해석하지 않습니다.
+
+### 10-6. 금지 사항
+
+- schema와 별개로 모바일에서 request 타입 재정의
+- component 내부에서 RHF 초기화/submit 처리
+- screen 내부에서 비표준 form 검증 로직 작성
