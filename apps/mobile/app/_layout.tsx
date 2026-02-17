@@ -5,7 +5,11 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
-import { ROOT_INITIAL_ROUTE, ROOT_STACK_OPTIONS } from '@/src/navigation/root-stack';
+import {
+  ONBOARDING_PROFILE_SETUP_ROUTE,
+  ROOT_INITIAL_ROUTE,
+  ROOT_STACK_OPTIONS,
+} from "@/src/navigation/root-stack";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -22,7 +26,9 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    NotoSerifKR: require("../assets/fonts/NotoSerifKR-VariableFont_wght.ttf"),
+    "NotoSerifKR-Regular": require("../assets/fonts/NotoSerifKR-Regular.ttf"),
+    "NotoSerifKR-SemiBold": require("../assets/fonts/NotoSerifKR-SemiBold.ttf"),
+    "NotoSerifKR-Bold": require("../assets/fonts/NotoSerifKR-Bold.ttf"),
     ...FontAwesome.font,
   });
 
@@ -49,7 +55,10 @@ function RootLayoutNav() {
     <ThemeProvider value={DefaultTheme}>
       <Stack>
         <Stack.Screen name="index" options={ROOT_STACK_OPTIONS.index} />
-        <Stack.Screen name="nickname" options={ROOT_STACK_OPTIONS.nickname} />
+        <Stack.Screen
+          name={ONBOARDING_PROFILE_SETUP_ROUTE}
+          options={ROOT_STACK_OPTIONS[ONBOARDING_PROFILE_SETUP_ROUTE]}
+        />
       </Stack>
     </ThemeProvider>
   );

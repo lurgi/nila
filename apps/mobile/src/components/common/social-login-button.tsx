@@ -60,11 +60,11 @@ const styles = StyleSheet.create({
   appleButtonText: {
     color: colors.appleButtonText,
     fontSize: typography.button,
-    fontWeight: "600",
+    fontFamily: typography.family.bold,
   },
   googleButtonText: {
     color: colors.googleButtonText,
     fontSize: typography.button,
-    fontWeight: "600",
+    fontFamily: typography.family.semibold,
   },
 });
