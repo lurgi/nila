@@ -4,9 +4,9 @@
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
-    "android": "expo run:android",
+    "android": "expo start --android",
     "android:run": "expo run:android",
-    "ios": "expo run:ios",
+    "ios": "expo start --ios",
     "ios:run": "expo run:ios",
     "web": "expo start --web"
   },
