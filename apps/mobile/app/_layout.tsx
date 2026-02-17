@@ -13,7 +13,7 @@ export {
 } from 'expo-router';
 
 export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
+  // Keep route initialization explicit for predictable reload behavior.
   initialRouteName: ROOT_INITIAL_ROUTE,
 };
 
@@ -49,8 +49,6 @@ function RootLayoutNav() {
     <ThemeProvider value={DefaultTheme}>
       <Stack>
         <Stack.Screen name="index" options={ROOT_STACK_OPTIONS.index} />
-        <Stack.Screen name="(tabs)" options={ROOT_STACK_OPTIONS.tabs} />
-        <Stack.Screen name="modal" options={ROOT_STACK_OPTIONS.modal} />
       </Stack>
     </ThemeProvider>
   );
