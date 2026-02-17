@@ -22,7 +22,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    NotoSerifKR: require("../assets/fonts/NotoSerifKR-VariableFont_wght.ttf"),
     ...FontAwesome.font,
   });
 
@@ -49,6 +49,7 @@ function RootLayoutNav() {
     <ThemeProvider value={DefaultTheme}>
       <Stack>
         <Stack.Screen name="index" options={ROOT_STACK_OPTIONS.index} />
+        <Stack.Screen name="nickname" options={ROOT_STACK_OPTIONS.nickname} />
       </Stack>
     </ThemeProvider>
   );
