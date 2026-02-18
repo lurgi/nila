@@ -1,13 +1,13 @@
 import { Type } from "@sinclair/typebox";
 import type { Static } from "@sinclair/typebox";
 import { UserSchema } from "./user.schema.js";
-import { FriendshipStatus } from "@/generated/prisma/client.js";
+import { FriendshipStatusEnum } from "./enum.js";
 
 export const FriendSchema = Type.Object({
   id: Type.String(),
   requesterId: Type.String(),
   addresseeId: Type.String(),
-  status: Type.Enum(FriendshipStatus),
+  status: Type.Enum(FriendshipStatusEnum),
   createdAt: Type.String({ format: "date-time" }),
   updatedAt: Type.String({ format: "date-time" }),
   friend: Type.Optional(UserSchema),
@@ -15,7 +15,7 @@ export const FriendSchema = Type.Object({
 
 export const FriendResponseItemSchema = Type.Object({
   id: Type.String(),
-  status: Type.Enum(FriendshipStatus),
+  status: Type.Enum(FriendshipStatusEnum),
   createdAt: Type.String({ format: "date-time" }),
   updatedAt: Type.String({ format: "date-time" }),
   friend: Type.Optional(UserSchema),

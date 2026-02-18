@@ -1,9 +1,9 @@
 import { Type } from "@sinclair/typebox";
-import { AuthProvider } from "@/generated/prisma/client.js";
+import { AuthProviderEnum } from "./enum.js";
 import { UserSchema } from "./user.schema.js";
 
 export const LoginBodySchema = Type.Object({
-  provider: Type.Enum(AuthProvider),
+  provider: Type.Enum(AuthProviderEnum),
   idToken: Type.String(),
 });
 

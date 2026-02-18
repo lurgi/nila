@@ -1,6 +1,6 @@
 import { Type } from "@sinclair/typebox";
 import type { Static } from "@sinclair/typebox";
-import { AuthProvider } from "@/generated/prisma/client.js";
+import { AuthProviderEnum } from "./enum.js";
 
 export const UserSchema = Type.Object({
   id: Type.String(),
@@ -12,7 +12,7 @@ export const UserSchema = Type.Object({
   isEmailAgreed: Type.Boolean(),
   isPushAgreed: Type.Boolean(),
   pushToken: Type.Union([Type.String(), Type.Null()]),
-  provider: Type.Enum(AuthProvider),
+  provider: Type.Enum(AuthProviderEnum),
   createdAt: Type.String({ format: "date-time" }),
   updatedAt: Type.String({ format: "date-time" }),
 });
