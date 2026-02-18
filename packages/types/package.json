@@ -8,11 +8,15 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
     },
     "./schemas/*": {
       "types": "./dist/schemas/*.d.ts",
-      "import": "./dist/schemas/*.js"
+      "import": "./dist/schemas/*.js",
+      "require": "./dist/schemas/*.js",
+      "default": "./dist/schemas/*.js"
     }
   },
   "files": [

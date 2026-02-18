@@ -7,6 +7,7 @@ type ProfileSetupNameInputViewProps = {
   value?: string;
   placeholder?: string;
   countText?: string;
+  maxLength?: number;
   state?: ProfileSetupInputState;
   errorMessage?: string;
   onChangeText?: (text: string) => void;
@@ -26,6 +27,7 @@ export function ProfileSetupNameInputView({
   value,
   placeholder,
   countText,
+  maxLength = 30,
   state = "default",
   errorMessage,
   onChangeText,
@@ -41,7 +43,7 @@ export function ProfileSetupNameInputView({
           style={styles.input}
           autoCapitalize="none"
           autoCorrect={false}
-          maxLength={20}
+          maxLength={maxLength}
         />
         <Text style={styles.count}>{countText}</Text>
       </View>

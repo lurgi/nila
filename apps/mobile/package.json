@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
+    "@nila/types": "workspace:*",
     "@react-navigation/native": "^7.1.8",
     "expo": "~54.0.33",
     "expo-constants": "~18.0.13",
@@ -23,6 +24,7 @@
     "expo-web-browser": "~15.0.10",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "react-hook-form": "^7.66.0",
     "react-native": "0.81.5",
     "react-native-reanimated": "~4.1.1",
     "react-native-safe-area-context": "~5.6.0",

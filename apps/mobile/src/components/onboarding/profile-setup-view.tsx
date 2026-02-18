@@ -12,6 +12,7 @@ type ProfileSetupViewProps = {
   value?: string;
   placeholder?: string;
   countText?: string;
+  inputMaxLength?: number;
   inputState?: ProfileSetupInputState;
   errorMessage?: string;
   submitLabel: string;
@@ -26,6 +27,7 @@ export function ProfileSetupView({
   value,
   placeholder,
   countText,
+  inputMaxLength,
   inputState = "default",
   errorMessage,
   submitLabel,
@@ -41,6 +43,7 @@ export function ProfileSetupView({
           value={value}
           placeholder={placeholder}
           countText={countText}
+          maxLength={inputMaxLength}
           state={inputState}
           errorMessage={errorMessage}
           onChangeText={onChangeValue}
