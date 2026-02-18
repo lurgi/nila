@@ -24,7 +24,9 @@ export const BaseUserUpdateBodySchema = Type.Object({
   phoneNumber: Type.Optional(Type.String()),
 });
 
-export const HANDLE_PATTERN = "^[a-z0-9._]{3,30}$";
+export const HANDLE_MIN_LENGTH = 3;
+export const HANDLE_MAX_LENGTH = 30;
+export const HANDLE_PATTERN = "^[a-z0-9._]+$";
 
 export const UpdateUserBodySchema = Type.Composite([
   BaseUserUpdateBodySchema,
@@ -39,7 +41,13 @@ export const UpdateUserBodySchema = Type.Composite([
 export const UpdateProfileBodySchema = Type.Composite([
   BaseUserUpdateBodySchema,
   Type.Object({
-    handle: Type.Optional(Type.String({ pattern: HANDLE_PATTERN })),
+    handle: Type.Optional(
+      Type.String({
+        minLength: HANDLE_MIN_LENGTH,
+        maxLength: HANDLE_MAX_LENGTH,
+        pattern: HANDLE_PATTERN,
+      }),
+    ),
   }),
 ]);
 
@@ -65,3 +73,6 @@ export const UpdateProfileSchema = {
 
 export type UpdateUserRequest = Static<typeof UpdateUserBodySchema>;
 export type UpdateProfileRequest = Static<typeof UpdateProfileBodySchema>;
+export type HandleFormRequest = {
+  handle: NonNullable<UpdateProfileRequest["handle"]>;
+};

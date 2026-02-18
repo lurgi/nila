@@ -2,6 +2,8 @@ import createError from "http-errors";
 import type { Prisma } from "@/generated/prisma/client.js";
 import type { UserRepository } from "./user.repository.js";
 import {
+  HANDLE_MAX_LENGTH,
+  HANDLE_MIN_LENGTH,
   HANDLE_PATTERN,
   type UpdateProfileRequest,
 } from "@/schemas/user.schema.js";
@@ -68,7 +70,11 @@ export const createUserService = (userRepository: UserRepository) => ({
     if (data.handle !== undefined) {
       const handleNormalized = data.handle.trim().toLowerCase();
 
-      if (!HANDLE_REGEX.test(handleNormalized)) {
+      if (
+        handleNormalized.length < HANDLE_MIN_LENGTH ||
+        handleNormalized.length > HANDLE_MAX_LENGTH ||
+        !HANDLE_REGEX.test(handleNormalized)
+      ) {
         throw createError(400, "Invalid handle format");
       }
 
