@@ -6,6 +6,8 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 import {
+  APP_HOME_ROUTE,
+  AUTH_LOGIN_ROUTE,
   ONBOARDING_PROFILE_SETUP_ROUTE,
   ROOT_INITIAL_ROUTE,
   ROOT_STACK_OPTIONS,
@@ -54,10 +56,17 @@ function RootLayoutNav() {
   return (
     <ThemeProvider value={DefaultTheme}>
       <Stack>
-        <Stack.Screen name="index" options={ROOT_STACK_OPTIONS.index} />
+        <Stack.Screen
+          name={AUTH_LOGIN_ROUTE}
+          options={ROOT_STACK_OPTIONS[AUTH_LOGIN_ROUTE]}
+        />
         <Stack.Screen
           name={ONBOARDING_PROFILE_SETUP_ROUTE}
           options={ROOT_STACK_OPTIONS[ONBOARDING_PROFILE_SETUP_ROUTE]}
+        />
+        <Stack.Screen
+          name={APP_HOME_ROUTE}
+          options={ROOT_STACK_OPTIONS[APP_HOME_ROUTE]}
         />
       </Stack>
     </ThemeProvider>

@@ -1,15 +1,18 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "expo-router";
 import {
   HANDLE_MAX_LENGTH,
   HANDLE_MIN_LENGTH,
   HANDLE_PATTERN,
   type HandleFormRequest,
 } from "@nila/types/schemas/handle.schema";
+import { APP_HOME_ROUTE } from "@/src/navigation/root-stack";
 
 const HANDLE_REGEX = new RegExp(HANDLE_PATTERN);
 
 export function useHandleForm() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -58,7 +61,7 @@ export function useHandleForm() {
   };
 
   const onSubmit = handleSubmit((_data: HandleFormRequest) => {
-    // TODO: 로직 구현 예정
+    router.replace(`/${APP_HOME_ROUTE}`);
   });
 
   return {
