@@ -1,4 +1,13 @@
-import { StyleSheet, View } from "react-native";
+import { useEffect, useRef } from "react";
+import {
+  Animated,
+  Keyboard,
+  type KeyboardEvent,
+  Platform,
+  StyleSheet,
+  View,
+} from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ProfileSetupHeaderView } from "@/src/components/onboarding/profile-setup-header-view";
 import { ProfileSetupNameInputView } from "@/src/components/onboarding/profile-setup-name-input-view";
 import { ProfileSetupSubmitButtonView } from "@/src/components/onboarding/profile-setup-submit-button-view";
@@ -35,6 +44,39 @@ export function ProfileSetupView({
   onChangeValue,
   onSubmitPress,
 }: ProfileSetupViewProps) {
+  const insets = useSafeAreaInsets();
+  const keyboardOffset = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const showEvent = Platform.OS === "ios" ? "keyboardWillShow" : "keyboardDidShow";
+    const hideEvent = Platform.OS === "ios" ? "keyboardWillHide" : "keyboardDidHide";
+
+    const handleKeyboardShow = (event: KeyboardEvent) => {
+      const keyboardHeight = Math.max(0, event.endCoordinates.height - insets.bottom);
+      Animated.timing(keyboardOffset, {
+        toValue: keyboardHeight,
+        duration: event.duration ?? 220,
+        useNativeDriver: true,
+      }).start();
+    };
+
+    const handleKeyboardHide = (event: KeyboardEvent) => {
+      Animated.timing(keyboardOffset, {
+        toValue: 0,
+        duration: event.duration ?? 200,
+        useNativeDriver: true,
+      }).start();
+    };
+
+    const showSub = Keyboard.addListener(showEvent, handleKeyboardShow);
+    const hideSub = Keyboard.addListener(hideEvent, handleKeyboardHide);
+
+    return () => {
+      showSub.remove();
+      hideSub.remove();
+    };
+  }, [insets.bottom, keyboardOffset]);
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
@@ -50,20 +92,29 @@ export function ProfileSetupView({
         />
       </View>
 
-      <View style={styles.submitSection}>
+      <Animated.View
+        style={[
+          styles.submitSection,
+          { bottom: insets.bottom + spacing.lg },
+          { transform: [{ translateY: Animated.multiply(keyboardOffset, -1) }] },
+        ]}
+      >
         <ProfileSetupSubmitButtonView
           label={submitLabel}
           disabled={submitDisabled}
           onPress={onSubmitPress}
         />
-      </View>
+      </Animated.View>
     </View>
   );
 }
 
+const SUBMIT_BUTTON_HEIGHT = 54;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    position: "relative",
     alignSelf: "center",
     width: "100%",
     maxWidth: 520,
@@ -71,10 +122,12 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingTop: spacing.lg,
+    paddingBottom: SUBMIT_BUTTON_HEIGHT + spacing.lg * 2,
     gap: spacing.xl,
   },
   submitSection: {
-    marginTop: "auto",
-    paddingTop: spacing.lg,
+    position: "absolute",
+    left: 0,
+    right: 0,
   },
 });

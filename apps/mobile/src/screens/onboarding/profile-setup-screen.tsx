@@ -17,7 +17,7 @@ export default function ProfileSetupScreen() {
   } = useHandleForm();
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={styles.safeArea} edges={["top", "left", "right"]}>
       <ProfileSetupView
         title="사용자 이름을 설정해주세요"
         description="친구들이 나를 찾을 수 있는 이름이에요"
@@ -42,6 +42,5 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
     paddingHorizontal: spacing.md,
     paddingTop: spacing.md,
-    paddingBottom: spacing.lg,
   },
 });
