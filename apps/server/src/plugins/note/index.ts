@@ -11,7 +11,7 @@ import {
   DeleteNoteSchema,
   type CreateNoteRequest,
   type UpdateNoteRequest,
-} from "@/schemas/note.schema.js";
+} from "@nila/types/schemas/note.schema";
 
 export default fp(
   async (fastify) => {

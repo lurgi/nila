@@ -11,7 +11,7 @@ import {
   GetPendingRequestsSchema,
   DeleteFriendshipSchema,
   type CreateFriendRequest,
-} from "@/schemas/friend.schema.js";
+} from "@nila/types/schemas/friend.schema";
 
 export default fp(
   async (fastify) => {

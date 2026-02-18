@@ -1,7 +1,7 @@
 import createError from "http-errors";
 import type { AuthRepository } from "./auth.repository.js";
 import type { UserService } from "../user/user.service.js";
-import type { LoginBodySchema } from "@/schemas/auth.schema.js";
+import type { LoginBodySchema } from "@nila/types/schemas/auth.schema";
 import type { Static } from "@sinclair/typebox";
 import { AuthProvider } from "@/generated/prisma/client.js";
 import type { User } from "@/generated/prisma/client.js";

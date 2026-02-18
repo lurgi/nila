@@ -10,7 +10,7 @@ import {
   GetLetterDetailSchema,
   GetSentLettersSchema,
   type CreateLetterRequest,
-} from "@/schemas/letter.schema.js";
+} from "@nila/types/schemas/letter.schema";
 
 export default fp(
   async (fastify) => {

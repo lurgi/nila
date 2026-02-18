@@ -3,7 +3,7 @@ import type { NoteService } from "./note.service.js";
 import type {
   CreateNoteRequest,
   UpdateNoteRequest,
-} from "@/schemas/note.schema.js";
+} from "@nila/types/schemas/note.schema";
 
 export const createNoteController = (noteService: NoteService) => ({
   getNotes: async (request: FastifyRequest, reply: FastifyReply) => {

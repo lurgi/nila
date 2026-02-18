@@ -8,7 +8,7 @@ import {
   LoginSchema,
   RefreshSchema,
   LogoutSchema,
-} from "@/schemas/auth.schema.js";
+} from "@nila/types/schemas/auth.schema";
 
 import type { FastifyRequest, FastifyReply } from "fastify";
 

@@ -6,7 +6,7 @@ import {
   HANDLE_MIN_LENGTH,
   HANDLE_PATTERN,
   type UpdateProfileRequest,
-} from "@/schemas/user.schema.js";
+} from "@nila/types/schemas/user.schema";
 
 type FindOrCreateByProviderInput = Pick<
   Prisma.UserCreateInput,

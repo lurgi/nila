@@ -1,6 +1,16 @@
 import { Type } from "@sinclair/typebox";
 import type { Static } from "@sinclair/typebox";
 import { AuthProviderEnum } from "./enum.js";
+import {
+  HANDLE_MAX_LENGTH,
+  HANDLE_MIN_LENGTH,
+  HANDLE_PATTERN,
+} from "./handle.schema.js";
+export {
+  HANDLE_MAX_LENGTH,
+  HANDLE_MIN_LENGTH,
+  HANDLE_PATTERN,
+} from "./handle.schema.js";
 
 export const UserSchema = Type.Object({
   id: Type.String(),
@@ -23,10 +33,6 @@ export const BaseUserUpdateBodySchema = Type.Object({
   name: Type.Optional(Type.String()),
   phoneNumber: Type.Optional(Type.String()),
 });
-
-export const HANDLE_MIN_LENGTH = 3;
-export const HANDLE_MAX_LENGTH = 30;
-export const HANDLE_PATTERN = "^[a-z0-9._]+$";
 
 export const UpdateUserBodySchema = Type.Composite([
   BaseUserUpdateBodySchema,
@@ -73,6 +79,3 @@ export const UpdateProfileSchema = {
 
 export type UpdateUserRequest = Static<typeof UpdateUserBodySchema>;
 export type UpdateProfileRequest = Static<typeof UpdateProfileBodySchema>;
-export type HandleFormRequest = {
-  handle: NonNullable<UpdateProfileRequest["handle"]>;
-};

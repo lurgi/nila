@@ -7,7 +7,7 @@ import { createFriendRepository } from "../friend/friend.repository.js";
 import {
   CreateInvitationSchema,
   ConsumeInvitationSchema,
-} from "@/schemas/invitation.schema.js";
+} from "@nila/types/schemas/invitation.schema";
 
 export default fp(
   async (fastify) => {

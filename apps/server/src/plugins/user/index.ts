@@ -8,7 +8,7 @@ import {
   UpdateProfileSchema,
   type UpdateProfileRequest,
   type UpdateUserRequest,
-} from "@/schemas/user.schema.js";
+} from "@nila/types/schemas/user.schema";
 import type { UserService } from "./user.service.js";
 import type { User } from "@/generated/prisma/client.js";
 

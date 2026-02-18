@@ -1,7 +1,7 @@
 import { Type } from "@sinclair/typebox";
 import type { Static } from "@sinclair/typebox";
-import { UserSchema } from "./user.schema.js";
 import { FriendshipStatusEnum } from "./enum.js";
+import { UserSchema } from "./user.schema.js";
 
 export const FriendSchema = Type.Object({
   id: Type.String(),

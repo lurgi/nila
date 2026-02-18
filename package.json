@@ -9,6 +9,9 @@
   "scripts": {
     "server": "yarn workspace @nila/server dev",
     "mobile": "yarn workspace @nila/mobile start",
+    "build:types": "yarn workspace @nila/types build",
+    "build:server": "yarn workspace @nila/server build",
+    "build": "yarn build:types && yarn build:server",
     "lint": "biome check .",
     "lint:fix": "biome check --write ."
   },

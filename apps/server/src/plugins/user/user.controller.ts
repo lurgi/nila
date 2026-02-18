@@ -6,7 +6,7 @@ import type {
   UpdateProfileRequest,
   UpdateUserRequest,
   UserResponseSchema,
-} from "@/schemas/user.schema.js";
+} from "@nila/types/schemas/user.schema";
 import type { User } from "@/generated/prisma/client.js";
 
 type UserResponse = Static<typeof UserResponseSchema>;

@@ -1,5 +1,5 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
-import type { CreateLetterRequest } from "@/schemas/letter.schema.js";
+import type { CreateLetterRequest } from "@nila/types/schemas/letter.schema";
 import type { LetterService } from "./letter.service.js";
 
 const toIsoDateString = (value: Date | null) => {

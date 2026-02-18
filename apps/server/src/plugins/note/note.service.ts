@@ -2,7 +2,7 @@ import createError from "http-errors";
 import type {
   CreateNoteRequest,
   UpdateNoteRequest,
-} from "@/schemas/note.schema.js";
+} from "@nila/types/schemas/note.schema";
 import type { NoteRepository } from "./note.repository.js";
 
 export const createNoteService = (noteRepository: NoteRepository) => {
