@@ -5,13 +5,7 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
-import {
-  APP_HOME_ROUTE,
-  AUTH_LOGIN_ROUTE,
-  ONBOARDING_PROFILE_SETUP_ROUTE,
-  ROOT_INITIAL_ROUTE,
-  ROOT_STACK_OPTIONS,
-} from "@/src/navigation/root-stack";
+import { ROOT_INITIAL_ROUTE } from "@/src/navigation/root-stack";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -55,20 +49,7 @@ export default function RootLayout() {
 function RootLayoutNav() {
   return (
     <ThemeProvider value={DefaultTheme}>
-      <Stack>
-        <Stack.Screen
-          name={AUTH_LOGIN_ROUTE}
-          options={ROOT_STACK_OPTIONS[AUTH_LOGIN_ROUTE]}
-        />
-        <Stack.Screen
-          name={ONBOARDING_PROFILE_SETUP_ROUTE}
-          options={ROOT_STACK_OPTIONS[ONBOARDING_PROFILE_SETUP_ROUTE]}
-        />
-        <Stack.Screen
-          name={APP_HOME_ROUTE}
-          options={ROOT_STACK_OPTIONS[APP_HOME_ROUTE]}
-        />
-      </Stack>
+      <Stack screenOptions={{ headerShown: false }}/>
     </ThemeProvider>
   );
 }
