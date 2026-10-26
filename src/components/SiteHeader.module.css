@@ -1,14 +1,14 @@
 .header { border-bottom: 1px solid var(--color-line); }
-.inner { min-height: 88px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-.brand { font-size: 36px; font-weight: 800; letter-spacing: -.07em; line-height: 1; text-decoration: none; }
+.inner { min-height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.brand { display: inline-flex; align-items: center; min-height: 44px; font-size: 26px; font-weight: 800; letter-spacing: -.07em; line-height: 1; text-decoration: none; }
 .brand span { color: var(--color-primary); }
-.nav { display: flex; align-items: center; gap: 32px; font-size: 14px; font-weight: 550; }
-.nav a { text-decoration: none; }
+.nav { display: flex; align-items: center; gap: 24px; font-size: 14px; font-weight: 550; }
+.nav a { display: inline-flex; align-items: center; min-height: 44px; white-space: nowrap; text-decoration: none; }
 .nav a:hover { color: var(--color-primary); }
 .contact { display: flex; align-items: center; gap: 14px; }
 @media (max-width: 767px) {
-  .inner { min-height: 72px; gap: 12px; flex-wrap: wrap; padding-block: 16px; }
-  .brand { font-size: 30px; }
-  .nav { gap: 20px; font-size: 12px; flex-wrap: wrap; }
+  .inner { min-height: 48px; gap: 12px; }
+  .brand { font-size: 22px; }
+  .nav { gap: 16px; font-size: 12px; }
   .contact { gap: 6px; }
 }
