@@ -31,7 +31,7 @@
   --site-control-hover: #e6e8eb;
   --site-frame-dot: #d5d9df;
   --site-media-label: #62686f;
-  --site-flow-arrow: #8a94a2;
+  --site-product-shadow: 0 24px 64px -12px rgb(18 61 67 / 24%);
 }
 
 :root {
