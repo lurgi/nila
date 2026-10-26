@@ -1,10 +1,19 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { SiteHeader } from '../components/SiteHeader';
+import { HeroSection } from '../components/HeroSection';
+import { ScenariosSection } from '../components/ScenariosSection';
+import { ContactSection } from '../components/ContactSection';
+import { SiteFooter } from '../components/SiteFooter';
 ---
 
-<BaseLayout title="Nila" description="Nila 서비스 소개 페이지를 준비하고 있습니다.">
-  <main>
-    <h1>Nila</h1>
-    <p>서비스 소개 페이지를 준비하고 있습니다.</p>
+<BaseLayout title="Nila — 댓글을 살피는 더 나은 흐름" description="Instagram 댓글 분석부터 검토와 처리 기록까지. Nila의 댓글 관리 흐름을 만나보세요.">
+  <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+  <SiteHeader />
+  <main id="main" tabindex="-1">
+    <HeroSection />
+    <ScenariosSection />
+    <ContactSection />
   </main>
+  <SiteFooter />
 </BaseLayout>
