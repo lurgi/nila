@@ -1,7 +1,7 @@
 .footer { border-top: 1px solid var(--color-line); padding-block: 36px; }
 .inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
 .brand { font-size: 30px; font-weight: 800; letter-spacing: -.07em; line-height: 1; }
-.brand span { color: var(--color-accent); }
+.brand span { color: var(--color-primary); }
 .info { display: flex; gap: 32px; flex-wrap: wrap; color: var(--color-muted); font-size: 12px; }
 @media (max-width: 767px) {
   .inner { flex-direction: column; align-items: flex-start; }

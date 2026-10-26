@@ -1,14 +1,49 @@
+@import "tailwindcss";
+
+@plugin "daisyui" {
+  themes: light --default;
+}
+
+/* Extend light so unused component and status colors retain daisyUI defaults. */
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+
+  --color-base-100: #fff;
+  --color-base-200: #f7f8fa;
+  --color-base-300: #e6e8eb;
+  --color-base-content: #191919;
+  --color-primary: #16818b;
+  --color-primary-content: #fff;
+  --radius-field: 6px;
+  --depth: 0;
+  --noise: 0;
+
+  --site-primary-hover: #106e77;
+  --site-primary-soft: #f0f8f8;
+  --site-primary-line: #d5e8e9;
+  --site-muted: #64686d;
+  --site-border: #e6e8eb;
+  --site-border-strong: #d9dde3;
+  --site-control: #f1f2f4;
+  --site-control-hover: #e6e8eb;
+  --site-frame-dot: #d5d9df;
+  --site-media-label: #62686f;
+  --site-flow-arrow: #8a94a2;
+}
+
 :root {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   line-height: 1.6;
-  color: #191919;
-  background: #fff;
+  color: var(--color-base-content);
+  background: var(--color-base-100);
   font-synthesis: none;
-  --color-text: #191919;
-  --color-muted: #64686d;
-  --color-line: #e6e8eb;
-  --color-soft: #f7f8fa;
-  --color-accent: #2358d6;
+  --color-text: var(--color-base-content);
+  --color-muted: var(--site-muted);
+  --color-line: var(--site-border);
+  --color-soft: var(--color-base-200);
   --page-gutter: 20px;
   --section-space: clamp(80px, 10vw, 144px);
 }
@@ -23,16 +58,45 @@ body {
   margin: 0;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
 h1, h2, h3, p, figure { margin: 0; }
-a { color: inherit; text-underline-offset: 4px; }
+a { text-decoration: underline; text-underline-offset: 4px; }
 img, video { display: block; max-width: 100%; }
 h1, h2, h3, p { overflow-wrap: anywhere; word-break: keep-all; }
-h1, h2, h3 { text-wrap: balance; }
+h1, h2, h3 { font-weight: 700; text-wrap: balance; }
 section[id] { scroll-margin-top: 24px; }
-:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 5px; }
-.container { width: min(1200px, calc(100% - var(--page-gutter) * 2)); margin-inline: auto; }
-.eyebrow { color: var(--color-accent); font-size: 13px; font-weight: 650; letter-spacing: .08em; }
-.skip-link { position: absolute; top: 12px; left: var(--page-gutter); z-index: 10; padding: 12px 18px; background: #fff; border: 1px solid var(--color-line); transform: translateY(-180%); }
+:focus-visible { outline: 3px solid var(--color-primary); outline-offset: 5px; }
+.site-container { width: min(1200px, calc(100% - var(--page-gutter) * 2)); margin-inline: auto; }
+.eyebrow { color: var(--color-primary); font-size: 13px; font-weight: 650; letter-spacing: .08em; }
+.skip-link { position: absolute; top: 12px; left: var(--page-gutter); z-index: 10; padding: 12px 18px; background: var(--color-base-100); border: 1px solid var(--color-line); transform: translateY(-180%); }
 .skip-link:focus { transform: translateY(0); }
+
+/* Shared daisyUI button sizing and theme states; section CSS only handles layout. */
+.btn {
+  --size: 48px;
+  --btn-p: 21px;
+  --fontsize: 15px;
+  min-height: 48px;
+  gap: 22px;
+  line-height: 1.6;
+  text-decoration: none;
+  box-shadow: none;
+  text-shadow: none;
+}
+.btn:not(.btn-primary) { --btn-color: var(--site-control); }
+.btn.btn-primary {
+  --btn-fg: var(--color-primary-content);
+  color: var(--color-primary-content);
+}
+@media (hover: hover) {
+  .btn-primary:hover { --btn-bg: var(--site-primary-hover); }
+  .btn:not(.btn-primary):hover { --btn-bg: var(--site-control-hover); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: none; }
+}
 @media (min-width: 768px) { :root { --page-gutter: 32px; } }
 @media (min-width: 1024px) { :root { --page-gutter: 48px; } }

@@ -1,4 +1,5 @@
 import styles from './ScenariosSection.module.css';
+import { SECTION_IDS } from '../constants/navigation';
 
 const scenarios = [
   { number: '01', label: '분석', title: '무엇부터 확인할지 막막할 때.', description: '댓글과 분류 결과를 함께 살펴보고, 확인이 필요한 댓글을 찾아보세요.', media: '댓글 분석 화면' },
@@ -8,8 +9,8 @@ const scenarios = [
 
 export function ScenariosSection() {
   return (
-    <section id="scenarios" className={styles.section} aria-labelledby="scenarios-title">
-      <div className="container">
+    <section id={SECTION_IDS.features} className={styles.section} aria-labelledby="scenarios-title">
+      <div className="site-container">
         <div className={styles.heading}>
           <p className="eyebrow">A CLEARER WORKFLOW</p>
           <h2 id="scenarios-title">댓글 관리의 순간마다.</h2>

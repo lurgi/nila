@@ -3,7 +3,7 @@ import styles from './ContactSection.module.css';
 export function ContactSection() {
   return (
     <section id="contact" className={styles.section} aria-labelledby="contact-title">
-      <div className={`container ${styles.grid}`}>
+      <div className={`site-container ${styles.grid}`}>
         <div>
           <p className="eyebrow">LET’S TALK</p>
           <h2 id="contact-title">댓글 관리의 다음 흐름,<br />함께 이야기해요.</h2>
