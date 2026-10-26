@@ -5,7 +5,7 @@ import heroProduct from '../assets/hero-product.png';
 import heroPlaceholder from '../assets/hero-product-preview.webp?inline';
 import { SiteHeader } from '../components/SiteHeader';
 import { HeroSection } from '../components/HeroSection';
-import { ScenariosSection } from '../components/ScenariosSection';
+import ScenariosSection from '../components/ScenariosSection.astro';
 import { ContactSection } from '../components/ContactSection';
 import { SiteFooter } from '../components/SiteFooter';
 
@@ -23,7 +23,7 @@ const heroImage = await getImage({
 <BaseLayout title="Nila — 댓글을 살피는 더 나은 흐름" description="Instagram 댓글 분석부터 검토와 처리 기록까지. Nila의 댓글 관리 흐름을 만나보세요.">
   <a class="skip-link" href="#main">본문으로 건너뛰기</a>
   <SiteHeader />
-  <main id="main" tabindex="-1">
+  <main id="main" class="landing-sections" tabindex="-1">
     <HeroSection image={{
       src: heroImage.src,
       srcSet: heroImage.srcSet.attribute,
