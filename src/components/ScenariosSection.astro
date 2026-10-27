@@ -3,9 +3,9 @@ import styles from './ScenariosSection.module.css';
 import { SECTION_IDS } from '../constants/navigation';
 
 const features = [
-  { id: 'analysis', label: '댓글 분석', title: '확인이 필요한 댓글부터.', description: '댓글과 분석 결과를 함께 살펴보고, 검토가 필요한 댓글을 찾아보세요.' },
-  { id: 'review', label: '검토와 처리', title: '판단부터 처리까지 한곳에서.', description: '검토할 댓글을 모아 살펴보고, 숨김·삭제 등 필요한 처리를 진행하세요.' },
-  { id: 'history', label: '처리 기록', title: '지난 처리 내역도 다시 확인.', description: '전체·숨김 댓글과 삭제 기록을 확인하고, 이전 처리 내역을 살펴보세요.' },
+  { id: 'analysis', title: ['살펴볼 댓글을', '더 빠르게 찾으세요.'], description: '댓글의 비난 표현과 게시물 관련성을 언어 모델로 분석해, 먼저 대응할 댓글과 추가로 확인할 댓글을 나눠 보여줍니다.' },
+  { id: 'review', title: ['검토부터 처리까지,', '한곳에서 이어가세요.'], description: '바로 판단하기 어려운 댓글은 검토함에 모아 살펴보고, Instagram 댓글을 바로 숨기거나 삭제하세요.' },
+  { id: 'history', title: ['삭제 내역을 확인하고,', '관리 기록으로 남기세요.'], description: '어떤 댓글을 삭제했는지 확인하고 내역을 CSV로 내려받으세요. 엑셀에 하나씩 옮겨 적지 않아도 관리 기록을 남길 수 있습니다.' },
 ];
 
 const trackId = `${SECTION_IDS.features}-carousel`;
@@ -27,10 +27,10 @@ const trackId = `${SECTION_IDS.features}-carousel`;
           data-feature={feature.id}
         >
           <div class={styles.body}>
-            <p class={styles.label}>{feature.label}</p>
-            <h2>{feature.title}</h2>
+            <h2>{feature.title.map((line, index) => <Fragment>{index > 0 && <br />}{line}</Fragment>)}</h2>
             <p class={styles.description}>{feature.description}</p>
           </div>
+          <div class={styles.imageSlot} aria-hidden="true"></div>
         </article>
       ))}
       </div>

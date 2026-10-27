@@ -5,9 +5,9 @@
 .track { display: flex; width: 100%; gap: 24px; align-items: stretch; }
 .featureCard { box-sizing: border-box; flex: 0 0 auto; flex-direction: column; width: 440px; min-width: 0; min-height: 500px; scroll-snap-align: start; border-radius: 16px; background: var(--color-soft); color: var(--color-text); }
 .body { padding: 32px; }
-.label { color: var(--color-primary); font-size: 14px; font-weight: 650; }
-.body h2 { margin-top: 24px; font-size: 30px; line-height: 1.35; letter-spacing: -.02em; }
+.body h2 { font-size: 30px; line-height: 1.35; letter-spacing: -.02em; }
 .description { margin-top: 20px; color: var(--color-muted); font-size: 16px; line-height: 1.8; }
+.imageSlot { flex: none; aspect-ratio: 4 / 3; margin: auto 32px 32px; border: 1px solid var(--color-line); border-radius: 12px; background: var(--color-base-100); }
 .controls { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }
 .controls[hidden] { display: none; }
 .control { padding: 0; font-size: 22px; }
@@ -25,6 +25,7 @@
   .track { gap: 16px; }
   .featureCard { width: calc(100% - 36px); min-height: 360px; }
   .body { padding: 24px; }
+  .imageSlot { margin-inline: 24px; margin-bottom: 24px; }
   .body h2 { font-size: 26px; }
   .controls { margin-top: 20px; }
 }
