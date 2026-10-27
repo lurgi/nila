@@ -1,5 +1,17 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'SUIT Variable';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/suit/v2.0.5/SUIT-Variable.woff2') format('woff2');
+}
+
+@theme {
+  --font-sans: 'SUIT Variable', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
 @plugin "daisyui" {
   themes: light --default;
 }
@@ -35,7 +47,7 @@
 }
 
 :root {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: var(--font-sans);
   line-height: 1.6;
   color: var(--color-base-content);
   background: var(--color-base-100);

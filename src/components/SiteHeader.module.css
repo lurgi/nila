@@ -1,6 +1,6 @@
 .header { border-bottom: 1px solid var(--color-line); }
 .inner { min-height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-.brand { display: inline-flex; align-items: center; min-height: 44px; font-size: 26px; font-weight: 800; letter-spacing: -.07em; line-height: 1; text-decoration: none; }
+.brand { display: inline-flex; align-items: center; min-height: 44px; font-size: 26px; font-weight: 800; letter-spacing: -.04em; line-height: 1; text-decoration: none; }
 .brand span { color: var(--color-primary); }
 .nav { display: flex; align-items: center; gap: 24px; font-size: 14px; font-weight: 550; }
 .nav a { display: inline-flex; align-items: center; min-height: 44px; white-space: nowrap; text-decoration: none; }
