@@ -39,8 +39,6 @@
   --noise: 0;
 
   --site-primary-hover: var(--brand-emerald-hover);
-  --site-primary-soft: #f0fdfa;
-  --site-primary-line: #ccfbf1;
   --site-muted: #64686d;
   --site-border: #e6e8eb;
   --site-border-strong: #d9dde3;
@@ -48,7 +46,6 @@
   --site-control-hover: #e6e8eb;
   --site-frame-dot: #d5d9df;
   --site-media-label: #62686f;
-  --site-product-shadow: 0 24px 64px -12px rgb(18 61 67 / 24%);
 }
 
 :root {
