@@ -5,7 +5,7 @@ import heroProduct from '../assets/hero-product.png';
 import heroPlaceholder from '../assets/hero-product-preview.webp?inline';
 import { SiteHeader } from '../components/SiteHeader';
 import { HeroSection } from '../components/HeroSection';
-import ScenariosSection from '../components/ScenariosSection.astro';
+import { ScenariosSection } from '../components/ScenariosSection';
 import { ContactSection } from '../components/ContactSection';
 import { SiteFooter } from '../components/SiteFooter';
 
@@ -32,7 +32,7 @@ const heroImage = await getImage({
       height: 750,
       placeholder: heroPlaceholder,
     }} />
-    <ScenariosSection />
+    <ScenariosSection client:load />
     <ContactSection />
   </main>
   <SiteFooter />
