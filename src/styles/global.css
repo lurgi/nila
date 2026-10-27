@@ -27,15 +27,20 @@
   --color-base-200: #f7f8fa;
   --color-base-300: #e6e8eb;
   --color-base-content: #191919;
-  --color-primary: #16818b;
+  /* Emerald is Nila's name for this turquoise palette. Keep the bright
+     brand accent separate from the white-text AA interaction color. */
+  --brand-emerald: #14b8a6;
+  --brand-emerald-aa: #0f766e;
+  --brand-emerald-hover: #115e59;
+  --color-primary: var(--brand-emerald-aa);
   --color-primary-content: #fff;
   --radius-field: 6px;
   --depth: 0;
   --noise: 0;
 
-  --site-primary-hover: #106e77;
-  --site-primary-soft: #f0f8f8;
-  --site-primary-line: #d5e8e9;
+  --site-primary-hover: var(--brand-emerald-hover);
+  --site-primary-soft: #f0fdfa;
+  --site-primary-line: #ccfbf1;
   --site-muted: #64686d;
   --site-border: #e6e8eb;
   --site-border-strong: #d9dde3;
