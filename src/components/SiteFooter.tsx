@@ -1,4 +1,5 @@
 import styles from './SiteFooter.module.css';
+import { APP_URL } from '../constants/navigation';
 
 export function SiteFooter() {
   return (
@@ -7,10 +8,7 @@ export function SiteFooter() {
         <div className={styles.brand}>
           <img src="/nila-wordmark.svg" alt="nila." width="1799" height="1000" />
         </div>
-        <div className={styles.info}>
-          <p>Nila · Instagram 댓글 관리</p>
-          <p>개인정보처리방침 · 공개 준비 중</p>
-        </div>
+        <a className={styles.privacy} href={`${APP_URL}/privacy`}>개인정보처리방침</a>
       </div>
     </footer>
   );

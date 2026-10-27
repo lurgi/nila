@@ -1,9 +1,10 @@
 .footer { padding-block: 36px; }
 .inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
 .brand { line-height: 1; }
-.brand img { width: auto; height: 30px; }
-.info { display: flex; gap: 32px; flex-wrap: wrap; color: var(--color-muted); font-size: 12px; }
+.brand img { width: auto; height: 26px; }
+.privacy { display: inline-flex; align-items: center; min-height: 44px; color: var(--color-muted); font-size: 14px; }
+.privacy:hover { color: var(--color-primary); }
 @media (max-width: 767px) {
   .inner { flex-direction: column; align-items: flex-start; }
-  .info { flex-direction: column; gap: 8px; }
+  .brand img { height: 22px; }
 }
