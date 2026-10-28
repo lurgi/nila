@@ -3,6 +3,7 @@ import EmblaCarousel, { type EmblaCarouselType } from 'embla-carousel';
 import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures';
 import styles from './ScenariosSection.module.css';
 import { SECTION_IDS } from '../constants/navigation';
+import { ProductImage, type ProductImageData } from './ProductImage';
 
 const features = [
   { id: 'analysis', title: ['살펴볼 댓글을', '더 빠르게 찾으세요.'], description: '댓글의 비난 표현과 게시물 관련성을 언어 모델로 분석해, 먼저 대응할 댓글과 추가로 확인할 댓글을 나눠 보여줍니다.' },
@@ -18,7 +19,7 @@ type Navigation = {
   canNext: boolean;
 };
 
-export function ScenariosSection() {
+export function ScenariosSection({ images }: { images: Record<string, ProductImageData> }) {
   const viewportRef = useRef<HTMLDivElement>(null);
   const carouselRef = useRef<EmblaCarouselType | null>(null);
   const reducedMotionRef = useRef<MediaQueryList | null>(null);
@@ -132,7 +133,7 @@ export function ScenariosSection() {
                 <h2>{feature.title.map((line, index) => <Fragment key={index}>{index > 0 && <br />}{line}</Fragment>)}</h2>
                 <p className={styles.description}>{feature.description}</p>
               </div>
-              <div className={styles.imageSlot} aria-hidden="true" />
+              <div className={styles.imageSlot}><ProductImage image={images[feature.id]} /></div>
             </article>
           ))}
         </div>

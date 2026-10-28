@@ -5,6 +5,30 @@ import { HeroSection } from '../components/HeroSection';
 import { ScenariosSection } from '../components/ScenariosSection';
 import { ContactSection } from '../components/ContactSection';
 import { SiteFooter } from '../components/SiteFooter';
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import type { ProductImageData } from '../components/ProductImage';
+import analysis from '../assets/product/analysis.png';
+import review from '../assets/product/review.png';
+import history from '../assets/product/history.png';
+import analysisPreview from '../assets/product/analysis-preview.webp?inline';
+import reviewPreview from '../assets/product/review-preview.webp?inline';
+import historyPreview from '../assets/product/history-preview.webp?inline';
+
+const cardSizes = '(min-width: 1296px) 320px, (min-width: 1280px) calc((100vw - 144px) / 3 - 64px), (min-width: 1024px) 376px, (min-width: 768px) 296px, calc(100vw - 124px)';
+
+async function prepareImage(src: ImageMetadata, placeholder: string, alt: string): Promise<ProductImageData> {
+  const width = 640;
+  const sizes = cardSizes;
+  const optimized = await getImage({ src, width, widths: [320, 480, 640, 880, 1200], sizes, format: 'webp', quality: 90 });
+  return { src: optimized.src, srcSet: optimized.srcSet.attribute, sizes, width, height: width * src.height / src.width, placeholder, alt };
+}
+
+const [analysisImage, reviewImage, historyImage] = await Promise.all([
+  prepareImage(analysis, analysisPreview, '댓글별 즉시 대응 및 추가 확인 분류 결과'),
+  prepareImage(review, reviewPreview, '검토함에서 댓글을 삭제하거나 검토를 완료하는 버튼'),
+  prepareImage(history, historyPreview, '삭제 기록의 조회 기간과 CSV 다운로드 버튼'),
+]);
 
 ---
 
@@ -13,7 +37,7 @@ import { SiteFooter } from '../components/SiteFooter';
   <SiteHeader />
   <main id="main" class="landing-sections" tabindex="-1">
     <HeroSection />
-    <ScenariosSection client:load />
+    <ScenariosSection images={{ analysis: analysisImage, review: reviewImage, history: historyImage }} client:load />
     <ContactSection />
   </main>
   <SiteFooter />

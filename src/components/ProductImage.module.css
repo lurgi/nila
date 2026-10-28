@@ -1,0 +1,4 @@
+.frame { position: relative; width: 100%; overflow: hidden; background-color: var(--color-base-100); background-size: 100% 100%; background-repeat: no-repeat; }
+.image { display: block; width: 100%; height: 100%; opacity: 1; transition: opacity 200ms ease-out; }
+.image[data-phase='loading'], .image[data-phase='error'] { opacity: 0; transition: none; }
+@media (prefers-reduced-motion: reduce) { .image { transition: none; } }

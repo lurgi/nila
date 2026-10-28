@@ -12,9 +12,6 @@ export function HeroSection() {
           <a className="btn" href={`#${SECTION_IDS.features}`}>기능 살펴보기 <span aria-hidden="true">↓</span></a>
         </div>
       </div>
-      <div className={styles.media} aria-hidden="true">
-        <div className={styles.imageSlot} />
-      </div>
     </section>
   );
 }

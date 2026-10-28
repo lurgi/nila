@@ -7,7 +7,7 @@
 .body { padding: 32px; }
 .body h2 { font-size: 30px; line-height: 1.35; letter-spacing: -.02em; }
 .description { margin-top: 20px; color: var(--color-muted); font-size: 16px; line-height: 1.8; }
-.imageSlot { flex: none; aspect-ratio: 4 / 3; margin: auto 32px 32px; border: 1px solid var(--color-line); border-radius: 12px; background: var(--color-base-100); }
+.imageSlot { flex: none; aspect-ratio: 4 / 3; overflow: hidden; margin: auto 32px 32px; border: 1px solid var(--color-line); border-radius: 12px; background: var(--color-base-100); }
 .controls { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }
 .controls[hidden] { display: none; }
 .control { padding: 0; font-size: 22px; }

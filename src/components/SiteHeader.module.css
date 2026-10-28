@@ -4,11 +4,14 @@
 .brand img { width: auto; height: 26px; }
 .nav { display: flex; align-items: center; gap: 24px; font-size: 14px; font-weight: 550; }
 .nav a { display: inline-flex; align-items: center; min-height: 44px; white-space: nowrap; text-decoration: none; }
-.nav a:hover { color: var(--color-primary); }
+.nav a:not(.appLink):hover { color: var(--color-primary); }
 .contact { display: flex; align-items: center; gap: 14px; }
+.nav .appLink { --size: 32px; --btn-p: 10px; --fontsize: 12px; min-height: 32px; gap: 6px; }
 @media (max-width: 767px) {
-  .inner { min-height: 48px; gap: 12px; }
+  .inner { min-height: 48px; gap: 8px; }
   .brand img { height: 22px; }
-  .nav { gap: 16px; font-size: 12px; }
+  .nav { gap: 8px; font-size: 12px; }
   .contact { gap: 6px; }
+  .nav .appLink { --btn-p: 8px; }
+  .nav a span { display: none; }
 }
