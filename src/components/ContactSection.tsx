@@ -11,8 +11,7 @@ export function ContactSection() {
           사소한 질문도 편하게 보내주세요.
         </p>
         <a className={styles.email} href="mailto:talk.nila@gmail.com">
-          <span>talk.nila@gmail.com</span>
-          <span aria-hidden="true">↗</span>
+          talk.nila@gmail.com
         </a>
       </div>
     </section>

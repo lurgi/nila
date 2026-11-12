@@ -36,7 +36,7 @@ const [analysisImage, reviewImage, historyImage] = await Promise.all([
   <a class="skip-link" href="#main">본문으로 건너뛰기</a>
   <SiteHeader />
   <main id="main" class="landing-sections" tabindex="-1">
-    <HeroSection />
+    <HeroSection client:load />
     <ScenariosSection images={{ analysis: analysisImage, review: reviewImage, history: historyImage }} client:load />
     <ContactSection />
   </main>

@@ -1,10 +1,7 @@
-.section { background: var(--color-soft); padding-block: var(--section-space); }
+.section { background: var(--color-base-200); padding-block: var(--section-space); }
 .title { font-size: clamp(20px, 2vw, 24px); font-weight: 600; line-height: 1.5; letter-spacing: -.015em; }
-.description { color: var(--color-muted); margin-top: 16px; line-height: 1.8; }
-.email { display: inline-flex; align-items: baseline; gap: 16px; max-width: 100%; min-height: 44px; margin-top: 32px; color: var(--color-primary); font-size: clamp(22px, 2.5vw, 30px); font-weight: 600; letter-spacing: -.015em; line-height: 1.5; text-decoration: underline; text-underline-offset: .2em; }
-.email > span:first-child { min-width: 0; overflow-wrap: anywhere; word-break: normal; }
-.email > span:last-child { flex-shrink: 0; }
-.email:hover { color: var(--site-primary-hover); }
+.description { margin-top: 16px; line-height: 1.8; }
+.email { display: inline-block; max-width: 100%; min-height: 44px; margin-top: 32px; color: var(--color-primary); font-size: clamp(22px, 2.5vw, 30px); font-weight: 600; letter-spacing: -.015em; line-height: 1.5; overflow-wrap: anywhere; text-decoration: underline; text-underline-offset: .2em; }
 @media (max-width: 767px) {
   .desktopBreak { display: none; }
 }

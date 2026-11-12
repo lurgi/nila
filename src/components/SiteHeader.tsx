@@ -10,8 +10,8 @@ export function SiteHeader() {
         </a>
         <nav aria-label="주요 메뉴" className={styles.nav}>
           <a href={`#${SECTION_IDS.features}`}>기능 살펴보기</a>
-          <a href="#contact" className={styles.contact}>Contact <span aria-hidden="true">↗</span></a>
-          <a href={APP_URL} className={`btn btn-primary ${styles.appLink}`}>nila 바로가기 <span aria-hidden="true">↗</span></a>
+          <a href="#contact">Contact</a>
+          <a href={APP_URL} className={`btn btn-primary ${styles.appLink}`}>nila 바로가기</a>
         </nav>
       </div>
     </header>
