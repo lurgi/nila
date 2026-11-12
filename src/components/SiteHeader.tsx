@@ -1,5 +1,5 @@
 import styles from './SiteHeader.module.css';
-import { APP_URL, SECTION_IDS } from '../constants/navigation';
+import { APP_URL } from '../constants/navigation';
 
 export function SiteHeader() {
   return (
@@ -9,7 +9,6 @@ export function SiteHeader() {
           <img src="/nila-wordmark.svg" alt="" width="1799" height="1000" />
         </a>
         <nav aria-label="주요 메뉴" className={styles.nav}>
-          <a href={`#${SECTION_IDS.features}`}>기능 살펴보기</a>
           <a href="#contact">Contact</a>
           <a href={APP_URL} className={`btn btn-primary ${styles.appLink}`}>nila 바로가기</a>
         </nav>
