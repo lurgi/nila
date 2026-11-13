@@ -1,0 +1,113 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SiteHeader } from '../components/SiteHeader';
+import { SiteFooter } from '../components/SiteFooter';
+
+const tallyEmbedUrl = 'https://tally.so/embed/RWMj9l?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1';
+---
+
+<BaseLayout title="닐라 베타테스터 신청" description="인스타그램 댓글을 직접 관리하는 분들을 위한 닐라 베타테스터 신청 페이지입니다.">
+  <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+  <SiteHeader homePath="/" />
+  <main id="main" class="site-container beta" tabindex="-1">
+    <div class="form-embed">
+      <iframe
+        data-tally-src={tallyEmbedUrl}
+        width="100%"
+        height="200"
+        title="닐라 베타테스터 신청 폼"
+      ></iframe>
+      <p id="tally-status" class="form-status" role="status" hidden>
+        <span class="loading loading-spinner text-primary" aria-hidden="true"></span>
+        <span class="sr-only">신청서를 불러오는 중이에요.</span>
+      </p>
+    </div>
+  </main>
+  <SiteFooter />
+
+  <script is:inline>
+    (() => {
+      const widgetUrl = 'https://tally.so/widgets/embed.js';
+      const frame = document.querySelector('iframe[data-tally-src]');
+      const status = document.getElementById('tally-status');
+      const formOrigin = new URL(frame.dataset.tallySrc).origin;
+
+      status.hidden = false;
+      const delayNotice = window.setTimeout(() => {
+        status.textContent = '신청서가 늦게 열리고 있어요. 계속 열리지 않으면 페이지를 새로고침해 주세요.';
+      }, 10000);
+
+      function handleFormLoaded(event) {
+        if (
+          event.origin !== formOrigin ||
+          event.source !== frame.contentWindow ||
+          typeof event.data !== 'string' ||
+          !event.data.includes('"Tally.FormLoaded"')
+        ) return;
+
+        window.clearTimeout(delayNotice);
+        status.hidden = true;
+        window.removeEventListener('message', handleFormLoaded);
+      }
+
+      window.addEventListener('message', handleFormLoaded);
+
+      function loadForm() {
+        if (window.Tally) {
+          window.Tally.loadEmbeds();
+          return;
+        }
+
+        if (!frame.hasAttribute('src')) frame.src = frame.dataset.tallySrc;
+      }
+
+      if (window.Tally) {
+        loadForm();
+        return;
+      }
+
+      const script = document.createElement('script');
+      script.src = widgetUrl;
+      script.onload = loadForm;
+      script.onerror = loadForm;
+      document.body.appendChild(script);
+    })();
+  </script>
+</BaseLayout>
+
+<style>
+  .beta {
+    display: grid;
+    max-width: 680px;
+    padding-block: clamp(48px, 8vw, 96px);
+  }
+
+  iframe {
+    display: block;
+    width: 100%;
+    border: 0;
+  }
+
+  .form-embed {
+    display: grid;
+  }
+
+  .form-embed > * {
+    grid-area: 1 / 1;
+  }
+
+  .form-status {
+    padding-inline: 12px;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  .form-status:not([hidden]) {
+    display: grid;
+    place-items: center;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .form-status .loading { animation: none; }
+  }
+</style>
