@@ -4,9 +4,36 @@ import { SiteHeader } from '../components/SiteHeader';
 import { HeroSection } from '../components/HeroSection';
 import { ContactSection } from '../components/ContactSection';
 import { SiteFooter } from '../components/SiteFooter';
+
+const title = 'nila — Instagram 댓글 분석과 관리';
+const description = 'Instagram 댓글을 분석해 먼저 살펴볼 댓글을 찾고, 검토와 처리 내역을 한곳에서 관리하세요.';
+const canonicalUrl = 'https://nila.im/';
+const shareImageUrl = new URL('/nila-share.png', canonicalUrl).href;
+const website = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'nila',
+  url: canonicalUrl,
+};
 ---
 
-<BaseLayout title="Nila — 댓글을 살피는 더 나은 흐름" description="Instagram 댓글 분석부터 검토와 처리 기록까지. Nila의 댓글 관리 흐름을 만나보세요.">
+<BaseLayout title={title} description={description}>
+  <Fragment slot="head">
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="nila" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={shareImageUrl} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="nila 로고" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json" set:html={JSON.stringify(website)} />
+  </Fragment>
   <a class="skip-link" href="#main">본문으로 건너뛰기</a>
   <SiteHeader />
   <main id="main" class="landing-sections" tabindex="-1">
