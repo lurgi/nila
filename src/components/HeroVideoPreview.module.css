@@ -25,10 +25,16 @@
 .panel[data-visible="true"] { opacity: 1; }
 .panel[data-visible="false"], .panel[aria-hidden="true"] { pointer-events: none; }
 
-.video {
+.video,
+.poster {
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+.poster {
+  position: absolute;
+  inset: 0;
 }
 
 .playback {
@@ -43,20 +49,20 @@
   border-inline-start: 11px solid currentColor;
 }
 
-.placeholder {
+.errorMessage {
   position: absolute;
   inset: 0;
   display: grid;
   place-content: center;
-  gap: 8px;
   padding: 16px;
   background: var(--color-base-200);
-  font-size: clamp(18px, 3vw, 28px);
-  font-weight: 650;
+  font-size: clamp(14px, 2vw, 18px);
   text-align: center;
 }
 
-.placeholder [role="status"] { font-size: .65em; font-weight: 400; }
+.poster + .errorMessage {
+  background: color-mix(in srgb, var(--color-base-200) 65%, transparent);
+}
 
 .viewport {
   --slide-width: 180px;

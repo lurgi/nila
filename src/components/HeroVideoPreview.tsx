@@ -2,6 +2,8 @@ import { useEffect, useId, useRef, useState, type KeyboardEvent } from 'react';
 import EmblaCarousel, { type EmblaCarouselType } from 'embla-carousel';
 import styles from './HeroVideoPreview.module.css';
 
+export const FIRST_DEMO_POSTER = '/videos/01-delivery-complaints-poster.webp';
+
 const scenarios = [
   {
     label: '배송 불만 추이',
@@ -245,6 +247,9 @@ export function HeroVideoPreview() {
                 onCanPlay={releasePreload}
                 onError={releasePreload}
               />
+              {index === 0 && visible && !ready && (
+                <img className={styles.poster} src={FIRST_DEMO_POSTER} alt="" width={960} height={540} />
+              )}
               {selected && ready && manualSelection === selection && (
                 <button
                   className={`btn btn-square ${styles.playback}`}
@@ -255,12 +260,7 @@ export function HeroVideoPreview() {
                   <span className={styles.playIcon} aria-hidden="true" />
                 </button>
               )}
-              {visible && !ready && (
-                <div className={styles.placeholder}>
-                  <p>{label}</p>
-                  {failed && <p role="status">영상을 불러오지 못했어요.</p>}
-                </div>
-              )}
+              {failed && <p className={styles.errorMessage} role="status">영상을 불러오지 못했어요.</p>}
             </div>
           );
         })}

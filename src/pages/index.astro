@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SiteHeader } from '../components/SiteHeader';
 import { HeroSection } from '../components/HeroSection';
+import { FIRST_DEMO_POSTER } from '../components/HeroVideoPreview';
 import { ContactSection } from '../components/ContactSection';
 import { SiteFooter } from '../components/SiteFooter';
 
@@ -20,6 +21,7 @@ const website = {
 <BaseLayout title={title} description={description}>
   <Fragment slot="head">
     <link rel="canonical" href={canonicalUrl} />
+    <link rel="preload" href={FIRST_DEMO_POSTER} as="image" type="image/webp" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="nila" />
     <meta property="og:locale" content="ko_KR" />
