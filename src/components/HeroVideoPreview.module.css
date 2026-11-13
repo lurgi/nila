@@ -64,7 +64,7 @@
   position: relative;
   width: 100%;
   max-width: calc(3 * var(--slide-width));
-  margin: 16px auto 0;
+  margin: 12px auto 0;
   overflow: hidden;
   overflow: clip;
   mask-image: linear-gradient(
@@ -102,6 +102,27 @@
   text-align: center;
   word-break: keep-all;
 }
+
+.descriptions {
+  display: grid;
+  min-width: 0;
+  margin-block-start: clamp(28px, 3vw, 36px);
+  padding-inline: 8px;
+  color: color-mix(in srgb, var(--color-base-content) 78%, var(--color-base-100));
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
+  line-height: 1.5;
+  text-align: center;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.descriptions > p {
+  /* Share a row so its height fits the longest description. */
+  grid-area: 1 / 1;
+  margin: 0;
+}
+
+.descriptions > p[data-visible="false"] { visibility: hidden; }
 
 @media (max-width: 767px) {
   .viewport {

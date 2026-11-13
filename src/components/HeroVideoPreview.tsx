@@ -3,10 +3,26 @@ import EmblaCarousel, { type EmblaCarouselType } from 'embla-carousel';
 import styles from './HeroVideoPreview.module.css';
 
 const scenarios = [
-  { label: '배송 불만 추이', src: '/videos/01-delivery-complaints.mp4' },
-  { label: '재입고 문의', src: '/videos/02-restock-interest.mp4' },
-  { label: '배송 불만 유형', src: '/videos/03-shipping-issue-types.mp4' },
-  { label: '가격 부담 이유', src: '/videos/04-price-concerns.mp4' },
+  {
+    label: '배송 불만 추이',
+    src: '/videos/01-delivery-complaints.mp4',
+    description: '댓글을 바탕으로 배송 불만이 언제 늘었는지 살펴봐요.',
+  },
+  {
+    label: '재입고 문의',
+    src: '/videos/02-restock-interest.mp4',
+    description: '어떤 상품의 재입고를 묻는 댓글이 있는지 찾아봐요.',
+  },
+  {
+    label: '배송 불만 유형',
+    src: '/videos/03-shipping-issue-types.mp4',
+    description: '배송 지연이나 포장 문제처럼 불만을 유형별로 살펴봐요.',
+  },
+  {
+    label: '가격 부담 이유',
+    src: '/videos/04-price-concerns.mp4',
+    description: '고객이 어떤 이유로 가격이 부담스럽다고 말하는지 살펴봐요.',
+  },
 ];
 
 type Presentation = { index: number; status: 'loading' | 'ready' | 'error' };
@@ -165,6 +181,13 @@ export function HeroVideoPreview() {
 
   return (
     <div className={styles.preview}>
+      <div className={styles.descriptions}>
+        {scenarios.map(({ label, description }, index) => (
+          <p key={label} data-visible={index === presentation.index}>
+            {description}
+          </p>
+        ))}
+      </div>
       <div ref={viewportRef} className={styles.viewport}>
         <div className={styles.track} role="tablist" aria-label="댓글 분석 시나리오">
           {scenarios.map(({ label }, index) => {
