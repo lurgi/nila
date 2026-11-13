@@ -1,0 +1,78 @@
+---
+import { APP_URL } from '../constants/navigation';
+---
+
+<section class="analytics-consent" id="analytics-consent" aria-labelledby="analytics-consent-title" hidden>
+  <h2 id="analytics-consent-title">분석 쿠키</h2>
+  <p>
+    페이지 방문과 유입 경로를 파악하기 위해 Google Analytics를 사용합니다.
+    선택은 홈페이지와 앱에 함께 적용됩니다.
+    <a href={`${APP_URL}/privacy`}>개인정보처리방침</a>
+  </p>
+  <div class="analytics-actions">
+    <button type="button" class="btn btn-outline" data-analytics-choice="denied">분석 쿠키 거부</button>
+    <button type="button" class="btn btn-primary" data-analytics-choice="allowed">분석 쿠키 허용</button>
+  </div>
+</section>
+
+<script>
+  import { ANALYTICS_CHOICE, createAnalytics } from '../analytics/analytics';
+
+  const analytics = createAnalytics('nila.im');
+  const path = window.location.pathname.replace(/\/$/, '') || '/';
+  const panel = document.getElementById('analytics-consent');
+  const settings = document.querySelector<HTMLButtonElement>('[data-analytics-settings]');
+  const deny = panel?.querySelector<HTMLButtonElement>('[data-analytics-choice="denied"]');
+  const allow = panel?.querySelector<HTMLButtonElement>('[data-analytics-choice="allowed"]');
+
+  if (import.meta.env.PROD && analytics.enabled && panel && settings && deny && allow &&
+    (path === '/' || path === '/beta')) {
+    settings.hidden = false;
+    panel.hidden = analytics.getChoice() !== ANALYTICS_CHOICE.UNSET;
+    settings.setAttribute('aria-expanded', String(!panel.hidden));
+    analytics.setPage({ key: path, path, title: document.title });
+
+    function showPanel(visible: boolean) {
+      if (!panel || !settings) return;
+      panel.hidden = !visible;
+      settings.setAttribute('aria-expanded', String(visible));
+    }
+
+    function saveChoice(choice: typeof ANALYTICS_CHOICE.ALLOWED | typeof ANALYTICS_CHOICE.DENIED) {
+      analytics.setChoice(choice);
+      if (analytics.getChoice() === ANALYTICS_CHOICE.UNSET) return;
+      showPanel(false);
+      settings?.focus({ preventScroll: true });
+    }
+
+    settings.addEventListener('click', () => {
+      showPanel(Boolean(panel.hidden));
+      if (!panel.hidden) deny.focus();
+    });
+    deny.addEventListener('click', () => saveChoice(ANALYTICS_CHOICE.DENIED));
+    allow.addEventListener('click', () => saveChoice(ANALYTICS_CHOICE.ALLOWED));
+    analytics.watchChoice((choice) => {
+      if (choice === ANALYTICS_CHOICE.UNSET) showPanel(true);
+    });
+  }
+</script>
+
+<style>
+  .analytics-consent {
+    position: fixed;
+    z-index: 20;
+    inset-inline: 1rem;
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    margin-inline-start: auto;
+    max-width: 28rem;
+    padding: 1rem;
+    border: 1px solid var(--color-base-300);
+    border-radius: 1rem;
+    background: var(--color-base-100);
+    box-shadow: 0 8px 28px rgb(0 0 0 / 15%);
+  }
+  h2 { font-size: 1rem; font-weight: 700; }
+  p { margin-block: 0.5rem 1rem; font-size: 0.875rem; }
+  a { text-decoration: underline; text-underline-offset: 0.2em; }
+  .analytics-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+</style>
