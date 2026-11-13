@@ -5,7 +5,7 @@ export function SiteHeader({ homePath = '' }: { homePath?: string }) {
   return (
     <header className={styles.header}>
       <div className={`site-container ${styles.inner}`}>
-        <a href={`${homePath}#main`} className={styles.brand} aria-label="Nila 첫 화면">
+        <a href="/" className={styles.brand} aria-label="nila 첫 화면">
           <img src="/nila-wordmark.svg" alt="" width="1799" height="1000" />
         </a>
         <nav aria-label="주요 메뉴" className={styles.nav}>
