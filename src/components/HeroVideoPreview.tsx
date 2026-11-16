@@ -2,32 +2,44 @@ import { useEffect, useId, useRef, useState, type KeyboardEvent } from 'react';
 import EmblaCarousel, { type EmblaCarouselType } from 'embla-carousel';
 import styles from './HeroVideoPreview.module.css';
 
+export const HERO_MOBILE_MEDIA = '(width < 768px)';
+export const HERO_WIDE_MEDIA = '(min-width: 768px)';
 export const FIRST_DEMO_POSTER = '/videos/01-delivery-complaints-poster.webp';
+export const FIRST_DEMO_MOBILE_POSTER = '/videos/01-delivery-complaints-mobile-poster.webp';
 
 const scenarios = [
   {
     label: '배송 불만 추이',
     src: '/videos/01-delivery-complaints.mp4',
+    mobileSrc: '/videos/01-delivery-complaints-mobile.mp4',
     description: '댓글을 바탕으로 배송 불만이 언제 늘었는지 살펴봐요.',
   },
   {
     label: '재입고 문의',
     src: '/videos/02-restock-interest.mp4',
+    mobileSrc: '/videos/02-restock-interest-mobile.mp4',
     description: '어떤 상품의 재입고를 묻는 댓글이 있는지 찾아봐요.',
   },
   {
     label: '배송 불만 유형',
     src: '/videos/03-shipping-issue-types.mp4',
+    mobileSrc: '/videos/03-shipping-issue-types-mobile.mp4',
     description: '배송 지연이나 포장 문제처럼 불만을 유형별로 살펴봐요.',
   },
   {
     label: '가격 부담 이유',
     src: '/videos/04-price-concerns.mp4',
+    mobileSrc: '/videos/04-price-concerns-mobile.mp4',
     description: '고객이 어떤 이유로 가격이 부담스럽다고 말하는지 살펴봐요.',
   },
 ];
 
 type Presentation = { index: number; status: 'loading' | 'ready' | 'error' };
+
+function hasMediaError(video: HTMLVideoElement) {
+  return video.error !== null ||
+    (video.currentSrc !== '' && video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE);
+}
 
 export function HeroVideoPreview() {
   const id = useId();
@@ -36,7 +48,9 @@ export function HeroVideoPreview() {
   const videosRef = useRef<(HTMLVideoElement | null)[]>([]);
   const [selection, setSelection] = useState({ index: 0 });
   const selectionRef = useRef(selection);
+  const manualPlayRequest = useRef<typeof selection | null>(null);
   const selectedIndex = selection.index;
+  const [mediaLoad, setMediaLoad] = useState({ version: 0, priorityIndex: 0 });
   const [requested, setRequested] = useState(() => new Set([0]));
   const [preloadRemaining, setPreloadRemaining] = useState(false);
   const [presentation, setPresentation] = useState<Presentation>({ index: 0, status: 'loading' });
@@ -84,12 +98,33 @@ export function HeroVideoPreview() {
   }, []);
 
   useEffect(() => {
-    const first = videosRef.current[0];
+    const mobileMedia = window.matchMedia(HERO_MOBILE_MEDIA);
+
+    function reloadForViewport() {
+      const { index } = selectionRef.current;
+      videosRef.current[index]?.pause();
+      const nextSelection = { index };
+      selectionRef.current = nextSelection;
+      setSelection(nextSelection);
+      setManualSelection(null);
+      setPresentation({ index, status: 'loading' });
+      setRequested(new Set([index]));
+      setPreloadRemaining(false);
+      // Media queries select a source when loading starts. Restart with fresh media elements.
+      setMediaLoad(previous => ({ version: previous.version + 1, priorityIndex: index }));
+    }
+
+    mobileMedia.addEventListener('change', reloadForViewport);
+    return () => mobileMedia.removeEventListener('change', reloadForViewport);
+  }, []);
+
+  useEffect(() => {
+    const first = videosRef.current[mediaLoad.priorityIndex];
     // The first request starts in the initial HTML and can finish before hydration.
-    if (first && (first.error || first.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA)) {
+    if (first && (hasMediaError(first) || first.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA)) {
       setPreloadRemaining(true);
     }
-  }, []);
+  }, [mediaLoad]);
 
   useEffect(() => {
     const { index } = selection;
@@ -105,6 +140,8 @@ export function HeroVideoPreview() {
 
       revealed = true;
       setPresentation({ index, status: 'ready' });
+      if (!video.paused || manualPlayRequest.current === selection) return;
+
       if (reducedMotion.matches) {
         setManualSelection(selection);
       } else {
@@ -114,12 +151,6 @@ export function HeroVideoPreview() {
       }
     };
 
-    function showError() {
-      if (selectionRef.current === selection) {
-        setPresentation({ index, status: 'error' });
-      }
-    }
-
     function advance() {
       if (selectionRef.current === selection) {
         carouselRef.current?.scrollNext(reducedMotion.matches);
@@ -128,10 +159,9 @@ export function HeroVideoPreview() {
 
     video.addEventListener('canplay', reveal);
     video.addEventListener('seeked', reveal);
-    video.addEventListener('error', showError);
     video.addEventListener('ended', advance);
-    if (video.error) {
-      showError();
+    if (hasMediaError(video)) {
+      setPresentation({ index, status: 'error' });
     } else {
       if (video.currentTime > 0) video.currentTime = 0;
       reveal();
@@ -140,16 +170,27 @@ export function HeroVideoPreview() {
     return () => {
       video.removeEventListener('canplay', reveal);
       video.removeEventListener('seeked', reveal);
-      video.removeEventListener('error', showError);
       video.removeEventListener('ended', advance);
       video.pause();
     };
   }, [selection]);
 
+  const showPlayButton = presentation.index !== selectedIndex ||
+    presentation.status === 'loading' ||
+    (presentation.status === 'ready' && manualSelection === selection);
+
   function playManually() {
-    void videosRef.current[selectedIndex]?.play().then(() => {
-      setManualSelection((current) => current === selection ? null : current);
-    }).catch(() => {});
+    const video = videosRef.current[selectedIndex];
+    if (!video || selectionRef.current !== selection || manualPlayRequest.current === selection) return;
+
+    manualPlayRequest.current = selection;
+    void video.play().then(() => {
+      if (selectionRef.current === selection) setManualSelection(null);
+    }).catch(() => {
+      if (selectionRef.current === selection) setManualSelection(selection);
+    }).finally(() => {
+      if (manualPlayRequest.current === selection) manualPlayRequest.current = null;
+    });
   }
 
   function onTabKeyDown(event: KeyboardEvent<HTMLButtonElement>) {
@@ -215,12 +256,26 @@ export function HeroVideoPreview() {
         </div>
       </div>
       <div className={styles.frame}>
-        {scenarios.map(({ label, src }, index) => {
+        {scenarios.map(({ label, src, mobileSrc }, index) => {
           const selected = index === selectedIndex;
           const visible = index === presentation.index;
           const ready = visible && presentation.status === 'ready';
           const failed = visible && presentation.status === 'error';
-          const releasePreload = index === 0 ? () => setPreloadRemaining(true) : undefined;
+          const releasePreload = index === mediaLoad.priorityIndex
+            ? () => setPreloadRemaining(true)
+            : undefined;
+          const shouldLoad = preloadRemaining || requested.has(index);
+
+          function showError() {
+            releasePreload?.();
+            if (selectionRef.current.index === index) {
+              setPresentation({ index, status: 'error' });
+            }
+          }
+
+          function handleSourceError(media: string) {
+            if (window.matchMedia(media).matches) showError();
+          }
 
           return (
             <div
@@ -236,34 +291,49 @@ export function HeroVideoPreview() {
               tabIndex={selected && !ready ? 0 : undefined}
             >
               <video
+                key={mediaLoad.version}
                 ref={(element) => { videosRef.current[index] = element; }}
                 className={styles.video}
-                src={preloadRemaining || requested.has(index) ? src : undefined}
                 preload="auto"
                 muted
                 playsInline
                 aria-label={label}
                 aria-hidden={!ready}
                 onCanPlay={releasePreload}
-                onError={releasePreload}
-              />
+                onError={(event) => {
+                  if (event.target === event.currentTarget) showError();
+                }}
+              >
+                {shouldLoad && (
+                  <>
+                    <source src={mobileSrc} type="video/mp4" media={HERO_MOBILE_MEDIA}
+                      onError={() => handleSourceError(HERO_MOBILE_MEDIA)} />
+                    <source src={src} type="video/mp4" media={HERO_WIDE_MEDIA}
+                      onError={() => handleSourceError(HERO_WIDE_MEDIA)} />
+                  </>
+                )}
+              </video>
               {index === 0 && visible && !ready && (
-                <img className={styles.poster} src={FIRST_DEMO_POSTER} alt="" width={960} height={540} />
-              )}
-              {selected && ready && manualSelection === selection && (
-                <button
-                  className={`btn btn-square ${styles.playback}`}
-                  type="button"
-                  aria-label="재생"
-                  onClick={playManually}
-                >
-                  <span className={styles.playIcon} aria-hidden="true" />
-                </button>
+                <picture className={styles.poster}>
+                  <source media={HERO_MOBILE_MEDIA} srcSet={FIRST_DEMO_MOBILE_POSTER} width={720} height={900} />
+                  <img src={FIRST_DEMO_POSTER} alt="" width={960} height={540} />
+                </picture>
               )}
               {failed && <p className={styles.errorMessage} role="status">영상을 불러오지 못했어요.</p>}
             </div>
           );
         })}
+        {showPlayButton && (
+          <button
+            className={`btn btn-square ${styles.playback}`}
+            type="button"
+            aria-label="재생"
+            aria-controls={`${id}-panel-${selectedIndex}`}
+            onClick={playManually}
+          >
+            <span className={styles.playIcon} aria-hidden="true" />
+          </button>
+        )}
       </div>
     </div>
   );
