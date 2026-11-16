@@ -1,0 +1,104 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SiteHeader } from '../components/SiteHeader';
+import { SiteFooter } from '../components/SiteFooter';
+import { NILA_CONTACT_EMAIL } from '../constants/navigation';
+
+const title = '닐라를 만드는 이유';
+const email = 'lurgi9710@gmail.com';
+---
+
+<BaseLayout title={title} description="닐라가 만들고 싶은 댓글 문화와 닐라를 개발하는 박정우를 소개합니다.">
+  <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+  <SiteHeader isAbout />
+  <main id="main" class="site-container about text-body" tabindex="-1">
+    <h1>{title}</h1>
+    <div class="body-copy">
+      <p>게시물 아래에서 궁금한 걸 묻고, 경험을 나누고, 아쉬웠던 점도 편하게 말할 수 있었으면 해요. 사람을 향한 조롱이나 공격이 이어지면, 처음 댓글을 남기려는 사람은 말을 보태기 어려워져요. 게시물을 만든 사람도 공격에 대응하면서 그 안에 섞인 질문과 의견을 계속 듣고 싶고요.</p>
+      <p>닐라는 댓글을 살피는 사람을 돕는 일부터 시작했어요. 지금은 Instagram에서 답이 필요한 질문과 반복되는 불만을 찾고, 판단이 필요한 댓글을 모아 검토할 수 있게 만들고 있습니다. 앞으로는 사람들이 콘텐츠를 보고 이야기를 나누는 다른 채널로도 넓혀가고 싶어요.</p>
+    </div>
+    <ul class="references" aria-label="참고 자료">
+      <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12693982/">온라인 토론 참여 연구</a></li>
+      <li><a href="https://about.fb.com/news/2021/08/protecting-our-community-from-abuse-on-instagram/">Instagram의 창작자 의견 및 대응 사례</a></li>
+    </ul>
+
+    <section class="about-section" aria-labelledby="nila-contact-title">
+      <h2 id="nila-contact-title" class="text-section-title">닐라 문의</h2>
+      <p>닐라에 대해 궁금하거나 사용하면서 불편한 점이 있다면 편하게 알려주세요.</p>
+      <ul class="contact-topics">
+        <li>사용 방법이나 베타테스트에 관한 질문</li>
+        <li>쓰면서 불편했던 점이나 발견한 오류</li>
+        <li>추가되었으면 하는 기능</li>
+      </ul>
+      <div class="contact-links">
+        <a class="text-contact-link" href={`mailto:${NILA_CONTACT_EMAIL}`}>{NILA_CONTACT_EMAIL}</a>
+      </div>
+    </section>
+
+    <section class="about-section" aria-labelledby="maker-title">
+      <h2 id="maker-title" class="text-section-title">만드는 사람</h2>
+      <p>안녕하세요, 박정우입니다. 혼자 닐라를 만들고 있어요. 사람이 기술을 어떻게 이해하고 자기 뜻대로 사용할 수 있는지에 관심이 있습니다. 개인적인 연락도 환영해요.</p>
+      <div class="contact-links">
+        <a class="text-contact-link" href={`mailto:${email}`}>{email}</a>
+        <a class="text-contact-link" href="https://lurgi.github.io/">개인 블로그</a>
+      </div>
+    </section>
+  </main>
+  <SiteFooter />
+</BaseLayout>
+
+<style>
+  .about {
+    max-width: 680px;
+    padding-block: clamp(56px, 9vw, 112px);
+  }
+
+  h1 {
+    margin-bottom: clamp(24px, 4vw, 36px);
+    font-size: clamp(32px, 5.5vw, 48px);
+    line-height: 1.2;
+    letter-spacing: -.03em;
+  }
+
+  .body-copy {
+    display: grid;
+    gap: 16px;
+  }
+
+  .references {
+    margin: 20px 0 0;
+    font-size: .875em;
+  }
+
+  .contact-topics {
+    margin: 8px 0 0;
+  }
+
+  .references,
+  .contact-topics {
+    padding-inline-start: 1.25em;
+    list-style-type: disc;
+  }
+
+  .about-section {
+    margin-top: clamp(36px, 6vw, 64px);
+    padding-top: clamp(28px, 4vw, 40px);
+    border-top: 1px solid var(--color-base-300);
+  }
+
+  h2 {
+    margin-bottom: 12px;
+  }
+
+  .contact-links {
+    display: grid;
+    justify-items: start;
+    gap: 4px;
+    margin-top: 16px;
+  }
+
+  main a {
+    color: var(--color-primary);
+    overflow-wrap: anywhere;
+  }
+</style>
