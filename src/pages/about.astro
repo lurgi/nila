@@ -14,13 +14,26 @@ const email = 'lurgi9710@gmail.com';
   <main id="main" class="site-container about text-body" tabindex="-1">
     <h1>{title}</h1>
     <div class="body-copy">
-      <p>게시물 아래에서 궁금한 걸 묻고, 경험을 나누고, 아쉬웠던 점도 편하게 말할 수 있었으면 해요. 사람을 향한 조롱이나 공격이 이어지면, 처음 댓글을 남기려는 사람은 말을 보태기 어려워져요. 게시물을 만든 사람도 공격에 대응하면서 그 안에 섞인 질문과 의견을 계속 듣고 싶고요.</p>
-      <p>닐라는 댓글을 살피는 사람을 돕는 일부터 시작했어요. 지금은 Instagram에서 답이 필요한 질문과 반복되는 불만을 찾고, 판단이 필요한 댓글을 모아 검토할 수 있게 만들고 있습니다. 앞으로는 사람들이 콘텐츠를 보고 이야기를 나누는 다른 채널로도 넓혀가고 싶어요.</p>
+      <p>안녕하세요, 닐라에 관심을 가져주셔서 감사해요.</p>
+      <p>닐라는 콘텐츠의 댓글을 살피고 관리할 수 있도록 돕는 도구예요.</p>
+      <p>댓글은 콘텐츠를 보고 궁금한 걸 물으며 각자의 경험과 생각을 나누는 게 댓글의 본질이라고 생각해요. 그런데 사람을 향한 조롱이나 공격이 이어지면, 댓글을 읽는 사람도 콘텐츠에 대해 의견을 보태기 어려워져요.</p>
+      <div>
+        <p>실제로 온라인 뉴스 댓글을 활용한 실험에서 서로를 존중하는 댓글을 읽은 사람들은 무례한 댓글을 읽은 사람들보다 글의 주제에 맞는 댓글을 쓰고 새로운 관점을 보태는 경우가 더 많았어요.</p>
+        <p class="reference-link">
+          <a href="https://journals.sagepub.com/doi/10.1177/2056305118793404" target="_blank" rel="noopener">
+            온라인 뉴스 댓글의 말투와 독자 반응에 관한 실험 <span aria-hidden="true">↗</span><span class="sr-only"> (새 탭에서 열림)</span>
+          </a>
+        </p>
+      </div>
+      <p>그래서 저는 콘텐츠에 대한 이야기가 이어질 수 있는 댓글 환경을 만들고 싶어서 닐라를 개발하고 있어요.</p>
+      <p class="product-intro">누구나 댓글로 의견을 자유롭게 표현할 수 있어야 하지만, 콘텐츠를 만든 사람도 자기 게시물의 댓글을 어떻게 관리할지 스스로 결정할 수 있어야 한다고 생각해요. 닐라는 그 결정을 내리는 데 필요한 댓글을 쉽게 찾고 살펴볼 수 있도록 돕고 있어요.</p>
+      <p>지금은 댓글이 콘텐츠와 얼마나 관련 있는지, 사람을 향한 공격이 담겨 있는지를 바탕으로 검토가 필요한 댓글을 가려내는 기능을 중심으로 개발하고 있어요. 현재는 Instagram 댓글을 다루며, 앞으로는 Meta 광고와 YouTube 채널의 댓글까지 다룰 계획이에요.</p>
     </div>
-    <ul class="references" aria-label="참고 자료">
-      <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12693982/">온라인 토론 참여 연구</a></li>
-      <li><a href="https://about.fb.com/news/2021/08/protecting-our-community-from-abuse-on-instagram/">Instagram의 창작자 의견 및 대응 사례</a></li>
-    </ul>
+    <p class="reference-link">
+      <a href="https://about.fb.com/news/2021/08/protecting-our-community-from-abuse-on-instagram/" target="_blank" rel="noopener">
+        Instagram의 창작자 의견 및 대응 사례 <span aria-hidden="true">↗</span><span class="sr-only"> (새 탭에서 열림)</span>
+      </a>
+    </p>
 
     <section class="about-section" aria-labelledby="nila-contact-title">
       <h2 id="nila-contact-title" class="text-section-title">닐라 문의</h2>
@@ -40,7 +53,9 @@ const email = 'lurgi9710@gmail.com';
       <p>안녕하세요, 박정우입니다. 혼자 닐라를 만들고 있어요. 사람이 기술을 어떻게 이해하고 자기 뜻대로 사용할 수 있는지에 관심이 있습니다. 개인적인 연락도 환영해요.</p>
       <div class="contact-links">
         <a class="text-contact-link" href={`mailto:${email}`}>{email}</a>
-        <a class="text-contact-link" href="https://lurgi.github.io/">개인 블로그</a>
+        <a class="text-contact-link" href="https://lurgi.github.io/" target="_blank" rel="noopener">
+          개인 블로그 <span aria-hidden="true">↗</span><span class="sr-only"> (새 탭에서 열림)</span>
+        </a>
       </div>
     </section>
   </main>
@@ -65,17 +80,21 @@ const email = 'lurgi9710@gmail.com';
     gap: 16px;
   }
 
-  .references {
-    margin: 20px 0 0;
+  .product-intro {
+    margin-top: 12px;
+  }
+
+  .reference-link {
+    margin-top: 6px;
     font-size: .875em;
+  }
+
+  .body-copy + .reference-link {
+    margin-top: 20px;
   }
 
   .contact-topics {
     margin: 8px 0 0;
-  }
-
-  .references,
-  .contact-topics {
     padding-inline-start: 1.25em;
     list-style-type: disc;
   }
