@@ -14,7 +14,7 @@ import { SiteFooter } from '../components/SiteFooter';
 const title = 'nila — Instagram 댓글 분석과 관리';
 const description = 'Instagram 댓글을 분석해 먼저 살펴볼 댓글을 찾고, 검토와 처리 내역을 한곳에서 관리하세요.';
 const canonicalUrl = 'https://nila.im/';
-const shareImageUrl = new URL('/nila-share.png', canonicalUrl).href;
+const shareImageUrl = new URL('/product-cards/01-ai-assistant.png', canonicalUrl).href;
 const website = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
@@ -26,6 +26,7 @@ const website = {
 <BaseLayout title={title} description={description}>
   <Fragment slot="head">
     <link rel="canonical" href={canonicalUrl} />
+    <meta name="naver-site-verification" content="be63f478fc77390cf8d6d6b8a87c2c0b62d22d92" />
     <link rel="preload" href={FIRST_DEMO_MOBILE_POSTER} as="image" type="image/webp" media={HERO_MOBILE_MEDIA} />
     <link rel="preload" href={FIRST_DEMO_POSTER} as="image" type="image/webp" media={HERO_WIDE_MEDIA} />
     <meta property="og:type" content="website" />
@@ -38,7 +39,7 @@ const website = {
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="nila 로고" />
+    <meta property="og:image:alt" content="댓글에 어떤 반응이 있는지 물어보세요. 닐라 AI 어시스턴트가 인스타그램 배송 불만을 배송 지연, 파손, 구성품 누락으로 나눠 보여주는 화면." />
     <meta name="twitter:card" content="summary_large_image" />
     <script type="application/ld+json" set:html={JSON.stringify(website)} />
   </Fragment>
